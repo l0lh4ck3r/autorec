@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>AutoRec Dashboard</title>
+</head>
+
+<body>
+
+<h1>AutoRec Dashboard</h1>
+
+<h2>Assets</h2>
+
+<table border="1">
+
+<tr>
+<th>Type</th>
+<th>Value</th>
+</tr>
+
+{% for asset in assets %}
+
+<tr>
+<td>{{ asset[2] }}</td>
+<td>{{ asset[3] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<h2>Findings</h2>
+
+<table border="1">
+
+<tr>
+<th>Severity</th>
+<th>Score</th>
+<th>Title</th>
+</tr>
+
+{% for finding in findings %}
+
+<tr>
+<td>{{ finding[1] }}</td>
+<td>{{ finding[2] }}</td>
+<td>{{ finding[3] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

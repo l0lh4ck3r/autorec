@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>AutoRec Report</title>
+
+</head>
+
+<body>
+
+<h1>{{ target }}</h1>
+
+<h2>Findings</h2>
+
+<ul>
+
+{% for finding in findings %}
+
+<li>
+
+[{{ finding.severity }}]
+
+{{ finding.title }}
+
+({{ finding.score }})
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</body>
+
+</html>

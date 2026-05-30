@@ -1,0 +1,17 @@
+profiles:
+
+  quick:
+    modules:
+      - subfinder
+      - dnsx
+      - httpx
+
+  passive:
+    modules:
+      - subfinder
+
+  full:
+    modules:
+      - subfinder
+      - dnsx
+      - httpx
