@@ -80,6 +80,38 @@ class HttpxModule(ReconModule):
             )
 
             for line in lines:
+                if "[" in line and "]" in line:
+
+                    try:
+
+                        parts = line.split("[")
+
+                        host = parts[0].strip()
+
+                        tech_string = (
+                            parts[-1]
+                            .replace("]", "")
+                            .strip()
+                        )
+
+                        technologies = [
+                            x.strip()
+                            for x in tech_string.split(",")
+                        ]
+
+                        for tech in technologies:
+
+                            if tech:
+
+                                context.repository.add_technology(
+                                context.scan_id,
+                                host,
+                                tech
+                            )
+
+                    except Exception:
+
+                        pass
 
                 # Store asset
                 if context.repository:

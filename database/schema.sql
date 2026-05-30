@@ -84,3 +84,9 @@ CREATE TABLE IF NOT EXISTS url_inventory (
     source TEXT,
     discovered_at TEXT
 );
+CREATE TABLE IF NOT EXISTS technologies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    scan_id INTEGER,
+    host TEXT,
+    technology TEXT
+);

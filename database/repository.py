@@ -268,4 +268,26 @@ class Repository:
             FROM url_inventory
             """
         )
+    def add_technology(
+        self,
+        scan_id,
+        host,
+        technology
+    ): 
+
+        self.db.execute(
+            """
+            INSERT INTO technologies(
+                scan_id,
+                host,
+                technology
+            )
+            VALUES (?, ?, ?)
+            """,
+            (
+                scan_id,
+                host,
+                technology
+            )
+        )
         return result

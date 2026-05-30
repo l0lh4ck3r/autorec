@@ -170,6 +170,19 @@ def search(
             f"{row['source']} "
             f"{row['url']}"
         )
+    print()
+
+    print("=" * 50)
+    print("TECHNOLOGIES")
+    print("=" * 50)
+
+    for row in results["technologies"]:
+
+        print(
+            f"{row['technology']} "
+            f"-> "
+            f"{row['host']}"
+        )
 
 if __name__ == "__main__":
 

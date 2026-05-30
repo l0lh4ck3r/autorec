@@ -39,10 +39,22 @@ class SearchEngine:
             WHERE url LIKE ?
             """,
             (keyword,)
-)
+        )
+
+        technologies = self.repository.db.fetchall(
+                """
+            SELECT 
+                host,
+                technology
+            FROM technologies
+            WHERE technology LIKE ?
+            """,
+            (keyword,)
+        )
 
         return {
             "findings": findings,
             "assets": assets,
-            "url": urls
+            "urls": urls,
+            "technologies": technologies
         }
