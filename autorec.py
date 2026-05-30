@@ -1,9 +1,8 @@
 import asyncio
 import shutil
-from cli.diff import DiffEngine
 import typer
-import sqlite3
 
+from cli.diff import DiffEngine
 from database.db import Database
 from cli.search import SearchEngine
 
@@ -111,6 +110,7 @@ def doctor_cmd():
 
     doctor()
 
+
 @app.command()
 def search(
     keyword: str
@@ -138,7 +138,7 @@ def search(
     print("ASSETS")
     print("=" * 50)
 
-    for row in results["assets"]:
+    for row in results.get("assets", []):
 
         print(
             f"{row['asset_type']}: "
@@ -151,37 +151,41 @@ def search(
     print("FINDINGS")
     print("=" * 50)
 
-    for row in results["findings"]:
+    for row in results.get("findings", []):
 
         print(
             f"[{row['severity']}] "
             f"{row['evidence']}"
         )
+
     print()
 
     print("=" * 50)
     print("URLS")
     print("=" * 50)
 
-    for row in results["urls"]:
+    for row in results.get("urls", []):
 
         print(
             f"{row['source']} "
             f"{row['url']}"
         )
+
     print()
 
     print("=" * 50)
     print("TECHNOLOGIES")
     print("=" * 50)
 
-    for row in results["technologies"]:
+    for row in results.get("technologies", []):
 
         print(
             f"{row['technology']} "
             f"-> "
             f"{row['host']}"
         )
+
+
 @app.command()
 def diff():
 
@@ -207,15 +211,14 @@ def diff():
 
     if not assets:
 
-        print(
-            "No differences found"
-        )
+        print("No differences found")
 
-        return
+    else:
 
-    for asset in assets:
+        for asset in assets:
 
-        print(asset)
+            print(asset)
+
     print()
 
     print("=" * 50)
@@ -233,6 +236,25 @@ def diff():
         for url in urls:
 
             print(url)
+
+    print()
+
+    print("=" * 50)
+    print("NEW TECHNOLOGIES")
+    print("=" * 50)
+
+    technologies = engine.new_technologies()
+
+    if not technologies:
+
+        print("No new technologies")
+
+    else:
+
+        for tech in technologies:
+
+            print(tech)
+
 
 if __name__ == "__main__":
 

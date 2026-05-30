@@ -90,3 +90,10 @@ CREATE TABLE IF NOT EXISTS technologies (
     host TEXT,
     technology TEXT
 );
+CREATE TABLE IF NOT EXISTS screenshots (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    scan_id INTEGER,
+    host TEXT,
+    image_path TEXT,
+    created_at TEXT
+);
