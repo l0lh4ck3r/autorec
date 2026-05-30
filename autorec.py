@@ -1,8 +1,7 @@
 import asyncio
 import shutil
-
+from cli.diff import DiffEngine
 import typer
-
 import sqlite3
 
 from database.db import Database
@@ -183,6 +182,57 @@ def search(
             f"-> "
             f"{row['host']}"
         )
+@app.command()
+def diff():
+
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    engine = DiffEngine(
+        repo
+    )
+
+    print()
+
+    print("=" * 50)
+    print("NEW ASSETS")
+    print("=" * 50)
+
+    assets = engine.new_assets()
+
+    if not assets:
+
+        print(
+            "No differences found"
+        )
+
+        return
+
+    for asset in assets:
+
+        print(asset)
+    print()
+
+    print("=" * 50)
+    print("NEW URLS")
+    print("=" * 50)
+
+    urls = engine.new_urls()
+
+    if not urls:
+
+        print("No new URLs")
+
+    else:
+
+        for url in urls:
+
+            print(url)
 
 if __name__ == "__main__":
 
