@@ -13,3 +13,4 @@ profiles:
       - httpx
       - gau
       - waybackurls
+      - gowitness

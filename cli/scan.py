@@ -19,6 +19,10 @@ from modules.waybackurls_module import (
     WaybackUrlsModule
 )
 
+from modules.gowitness_module import (
+    GowitnessModule
+)
+
 
 MODULE_MAP = {
 
@@ -30,7 +34,9 @@ MODULE_MAP = {
 
     "gau": GauModule,
 
-    "waybackurls": WaybackUrlsModule
+    "waybackurls": WaybackUrlsModule,
+
+    "gowitness": GowitnessModule
 }
 
 
@@ -58,5 +64,6 @@ def load_modules(profile):
         modules.append(
             MODULE_MAP[name]()
         )
+
 
     return modules

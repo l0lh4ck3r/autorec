@@ -290,4 +290,39 @@ class Repository:
                 technology
             )
         )
+    def add_screenshot(
+        self,
+        scan_id,
+        host,
+        image_path
+    ):
+
+        now = datetime.utcnow().isoformat()
+
+        self.db.execute(
+            """
+            INSERT INTO screenshots(
+                scan_id,
+                host,
+                image_path,
+                created_at
+            )
+            VALUES (?, ?, ?, ?)
+            """,
+            (
+                scan_id,
+                host,
+                image_path,
+                now
+            )
+        )
+    def get_screenshots(self):
+
+        return self.db.fetchall(
+            """
+            SELECT *
+            FROM screenshots
+            ORDER BY id DESC
+            """
+        )
         return result
