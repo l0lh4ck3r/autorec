@@ -6,12 +6,10 @@ profiles:
       - dnsx
       - httpx
 
-  passive:
-    modules:
-      - subfinder
-
   full:
     modules:
       - subfinder
       - dnsx
       - httpx
+      - gau
+      - waybackurls

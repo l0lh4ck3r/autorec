@@ -14,6 +14,11 @@ from modules.httpx_module import (
     HttpxModule
 )
 
+from modules.gau_module import GauModule
+from modules.waybackurls_module import (
+    WaybackUrlsModule
+)
+
 
 MODULE_MAP = {
 
@@ -21,7 +26,11 @@ MODULE_MAP = {
 
     "dnsx": DnsxModule,
 
-    "httpx": HttpxModule
+    "httpx": HttpxModule,
+
+    "gau": GauModule,
+
+    "waybackurls": WaybackUrlsModule
 }
 
 

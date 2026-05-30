@@ -220,3 +220,52 @@ class Repository:
                 technology
             )
         )
+    # -------------------------
+    # SCAN HELPERS
+    # -------------------------
+
+    def get_latest_scan(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT *
+            FROM scans
+            ORDER BY id DESC
+            LIMIT 1
+            """
+        )
+    def add_discovered_url(
+        self,
+        scan_id,
+        url,
+        source
+    ):
+
+        now = datetime.utcnow().isoformat()
+
+        self.db.execute(
+            """
+            INSERT INTO url_inventory(
+                scan_id,
+                url,
+                source,
+                discovered_at
+            )
+            VALUES (?, ?, ?, ?)
+            """,
+            (
+                scan_id,
+                url,
+                source,
+                now
+            )
+        )
+    def get_urls(self):
+
+        return self.db.fetchall(
+            """
+            SELECT *
+            FROM url_inventory
+            """
+        )
+        return result

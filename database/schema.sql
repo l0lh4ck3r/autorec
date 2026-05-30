@@ -71,10 +71,16 @@ CREATE TABLE IF NOT EXISTS technologies (
     host TEXT,
     technology TEXT
 );
-
 CREATE TABLE IF NOT EXISTS urls (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     host TEXT,
     url TEXT,
     status_code INTEGER
+);
+CREATE TABLE IF NOT EXISTS url_inventory (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    scan_id INTEGER,
+    url TEXT,
+    source TEXT,
+    discovered_at TEXT
 );

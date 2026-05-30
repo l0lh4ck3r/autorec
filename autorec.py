@@ -3,6 +3,11 @@ import shutil
 
 import typer
 
+import sqlite3
+
+from database.db import Database
+from cli.search import SearchEngine
+
 from core.workspace import Workspace
 from core.eventbus import EventBus
 from core.context import ScanContext
@@ -107,6 +112,64 @@ def doctor_cmd():
 
     doctor()
 
+@app.command()
+def search(
+    keyword: str
+):
+
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    engine = SearchEngine(
+        repo
+    )
+
+    results = engine.search(
+        keyword
+    )
+
+    print()
+
+    print("=" * 50)
+    print("ASSETS")
+    print("=" * 50)
+
+    for row in results["assets"]:
+
+        print(
+            f"{row['asset_type']}: "
+            f"{row['asset_value']}"
+        )
+
+    print()
+
+    print("=" * 50)
+    print("FINDINGS")
+    print("=" * 50)
+
+    for row in results["findings"]:
+
+        print(
+            f"[{row['severity']}] "
+            f"{row['evidence']}"
+        )
+    print()
+
+    print("=" * 50)
+    print("URLS")
+    print("=" * 50)
+
+    for row in results["urls"]:
+
+        print(
+            f"{row['source']} "
+            f"{row['url']}"
+        )
 
 if __name__ == "__main__":
 
