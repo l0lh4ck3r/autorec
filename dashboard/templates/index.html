@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AutoRec Dashboard</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#111;
+    color:white;
+    padding:20px;
+}
+
+.cards{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:#222;
+    padding:20px;
+    border-radius:10px;
+    min-width:180px;
+}
+
+.number{
+    font-size:32px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>AutoRec Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<div>Assets</div>
+<div class="number">{{ stats.assets }}</div>
+</div>
+
+<div class="card">
+<div>URLs</div>
+<div class="number">{{ stats.urls }}</div>
+</div>
+
+<div class="card">
+<div>Findings</div>
+<div class="number">{{ stats.findings }}</div>
+</div>
+
+<div class="card">
+<div>Technologies</div>
+<div class="number">{{ stats.technologies }}</div>
+</div>
+
+<div class="card">
+<div>Screenshots</div>
+<div class="number">{{ stats.screenshots }}</div>
+</div>
+
+</div>
+
+</body>
+</html>
