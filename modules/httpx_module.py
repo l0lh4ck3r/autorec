@@ -1,8 +1,6 @@
 from core.module import ReconModule
 from core.toolrunner import ToolRunner
-
 from correlation.scorer import Scorer
-
 
 class HttpxModule(ReconModule):
 
@@ -32,8 +30,9 @@ class HttpxModule(ReconModule):
 
         output_file = (
             http_dir
-            / "alive_urls.txt"
+            / "alive.txt"
         )
+
         urls_only_file = (
             http_dir
             / "alive_urls.txt"
@@ -42,8 +41,7 @@ class HttpxModule(ReconModule):
         if not input_file.exists():
 
             print(
-                f"[HTTPX] Missing input file: "
-                f"{input_file}"
+                f"[HTTPX] Missing input file: {input_file}"
             )
 
             return
@@ -62,15 +60,13 @@ class HttpxModule(ReconModule):
         result = await ToolRunner.run(cmd)
 
         print(
-            f"[HTTPX] Return Code: "
-            f"{result['returncode']}"
+            f"[HTTPX] Return Code: {result['returncode']}"
         )
 
         if result["stderr"]:
 
             print(
-                f"[HTTPX ERROR]\n"
-                f"{result['stderr']}"
+                f"[HTTPX ERROR]\n{result['stderr']}"
             )
 
         scorer = Scorer()
@@ -82,12 +78,20 @@ class HttpxModule(ReconModule):
                 .read_text()
                 .splitlines()
             )
+
             clean_urls = []
 
             for line in lines:
-                host = line.split()[0]
 
-                clean_urls.append(host)
+                host = (
+                    line
+                    .split(" [")[0]
+                    .strip()
+                )
+
+                clean_urls.append(
+                    host
+                )
 
                 if "[" in line and "]" in line:
 
@@ -95,7 +99,10 @@ class HttpxModule(ReconModule):
 
                         parts = line.split("[")
 
-                        host = parts[0].strip()
+                        host_name = (
+                            parts[0]
+                            .strip()
+                        )
 
                         tech_string = (
                             parts[-1]
@@ -113,26 +120,24 @@ class HttpxModule(ReconModule):
                             if tech:
 
                                 context.repository.add_technology(
-                                context.scan_id,
-                                host,
-                                tech
-                            )
+                                    context.scan_id,
+                                    host_name,
+                                    tech
+                                )
 
                     except Exception:
 
                         pass
 
-                # Store asset
-                if context.repository:
+                context.repository.add_asset(
+                    context.scan_id,
+                    "http_service",
+                    line
+                )
 
-                    context.repository.add_asset(
-                        context.scan_id,
-                        "http_service",
-                        line
-                    )
-
-                # Score finding
-                score = scorer.score(line)
+                score = scorer.score(
+                    line
+                )
 
                 severity = scorer.severity(
                     score
@@ -147,16 +152,15 @@ class HttpxModule(ReconModule):
                         f"{line}"
                     )
 
-                    if context.repository:
+                    context.repository.add_finding(
+                        severity=severity,
+                        score=score,
+                        title="Interesting Asset",
+                        evidence=line
+                    )
 
-                        context.repository.add_finding(
-                            severity=severity,
-                            score=score,
-                            title="Interesting Asset",
-                            evidence=line
-                        )
-                        urls_only_file.write_text(
-                        "\n".join(clean_urls)
-                        )
+            urls_only_file.write_text(
+                "\n".join(clean_urls)
+            )
 
         return result
