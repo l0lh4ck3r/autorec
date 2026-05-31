@@ -1,159 +1,319 @@
 # AutoRec
 
-AutoRec is an automated reconnaissance framework that combines asset discovery, URL collection, technology fingerprinting, screenshot capture, correlation, and reporting into a single workflow.
+AutoRec is a modular reconnaissance automation framework designed for bug bounty hunting, attack surface mapping, and continuous reconnaissance.
+
+It combines subdomain discovery, DNS resolution, HTTP probing, URL collection, screenshotting, asset correlation, reporting, Docker deployment, and a web dashboard into a single workflow.
+
+---
 
 ## Features
 
-* Subdomain Discovery
-* DNS Resolution
-* HTTP Probing
-* URL Collection
-* Technology Detection
-* Screenshot Collection
-* SQLite Storage
-* Correlation Engine
-* HTML Dashboard
+### Recon Pipeline
+
+* Subdomain Discovery (Subfinder)
+* DNS Resolution (DNSX)
+* HTTP Enumeration (HTTPX)
+* URL Collection (GAU)
+* Historical URL Collection (WaybackURLs)
+* Screenshot Capture (GoWitness)
+
+### Asset Inventory
+
+Automatically stores:
+
+* Subdomains
+* Resolved Hosts
+* HTTP Services
+* Technologies
+* URLs
+* Screenshots
+
+### Correlation Engine
+
+Detects interesting assets and URLs using scoring rules.
+
+Examples:
+
+* Admin Panels
+* Login Pages
+* API Endpoints
+* Sensitive Paths
+* Interesting Technologies
+
+### Database
+
+SQLite-backed storage for:
+
+* Scans
+* Assets
+* Findings
+* Technologies
+* URLs
+* Screenshots
+
+### Reporting
+
+* HTML Reports
 * Asset Inventory
-* Search
-* Statistics
+* Findings Summary
 
-## Architecture
+### Dashboard
 
-Target
-↓
-Subfinder
-↓
-DNSX
-↓
-HTTPX
-↓
-GAU / Waybackurls
-↓
-Gowitness
-↓
-SQLite
-↓
-Dashboard
+Web dashboard with:
 
-## Installation
+* Overview Statistics
+* Asset Inventory
+* Findings Viewer
+* Screenshot Gallery
+
+### Docker Support
+
+Run AutoRec inside Docker with minimal setup.
+
+---
+
+# Installation
+
+## Requirements
+
+### Python
+
+* Python 3.12+
+
+### Go
+
+Required tools:
+
+* Subfinder
+* DNSX
+* HTTPX
+* GAU
+* WaybackURLs
+
+---
+
+## Clone Repository
 
 ```bash
-git clone <repository>
+git clone https://github.com/l0lh4ck3r/autorec.git
 
 cd autorec
+```
 
+---
+
+## Create Virtual Environment
+
+```bash
 python -m venv venv
 
 source venv/bin/activate
+```
 
+---
+
+## Install Python Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-## Dependencies
+---
 
-The following tools must be installed and available in PATH:
-
-* subfinder
-* dnsx
-* httpx
-* gau
-* waybackurls
-* gowitness
-
-## Verify Installation
+## Install Go Tools
 
 ```bash
-python autorec.py doctor
+go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+
+go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+
+go install github.com/projectdiscovery/httpx/cmd/httpx@latest
+
+go install github.com/lc/gau/v2/cmd/gau@latest
+
+go install github.com/tomnomnom/waybackurls@latest
 ```
 
-## Usage
+---
 
-### Quick Scan
+# Quick Start
 
-```bash
-python autorec.py scan example.com
-```
-
-### Full Scan
+## Full Scan
 
 ```bash
 python autorec.py scan example.com --profile full
 ```
 
-### Statistics
+Output:
 
-```bash
-python autorec.py stats
-```
-
-### Search
-
-```bash
-python autorec.py search admin
-```
-
-### Rebuild Report
-
-```bash
-python autorec.py rebuild-report
-```
-
-### Dashboard
-
-```bash
-python autorec.py dashboard
-```
-
-## Output Structure
-
+```text
 output/
+└── example.com_YYYYMMDD_HHMMSS/
+    ├── subdomains/
+    ├── dns/
+    ├── http/
+    ├── urls/
+    ├── screenshots/
+    └── scan.db
+```
 
-└── target_timestamp/
+---
 
-├── dns/
+## Dashboard
 
-├── http/
+Start dashboard:
 
-├── urls/
+```bash
+python dashboard/app.py
+```
 
-├── screenshots/
+Open:
 
-└── report.html
+```text
+http://localhost:5000
+```
 
-## Database
+Available pages:
 
-Database file:
+```text
+/
+ /assets
+ /findings
+ /screenshots
+```
 
-latest.db
+---
 
-Tables:
+# Docker
 
-* scans
-* hosts
-* urls
-* asset_inventory
-* url_inventory
-* technologies
-* screenshots
-* findings
+Build image:
 
-## Current Status
+```bash
+docker compose build
+```
 
-Version: 1.0 Release Candidate
+Run:
 
-Implemented:
+```bash
+docker compose up
+```
 
-* Scanner Engine
-* Dashboard
-* Screenshots
-* Database
+---
+
+# Database Schema
+
+Main tables:
+
+```text
+scans
+asset_inventory
+findings
+technologies
+url_inventory
+screenshots
+scan_state
+```
+
+---
+
+# Project Structure
+
+```text
+autorec/
+├── autorec.py
+├── core/
+├── database/
+├── modules/
+├── correlation/
+├── reporting/
+├── dashboard/
+├── output/
+├── logs/
+├── wordlists/
+└── latest.db
+```
+
+---
+
+# Current Modules
+
+| Module      | Purpose                  |
+| ----------- | ------------------------ |
+| Subfinder   | Subdomain Discovery      |
+| DNSX        | DNS Resolution           |
+| HTTPX       | HTTP Enumeration         |
+| GAU         | URL Collection           |
+| WaybackURLs | Historical URL Discovery |
+| GoWitness   | Screenshot Collection    |
+
+---
+
+# Roadmap
+
+## Completed
+
+* Recon Pipeline
+* SQLite Database
 * Correlation Engine
-* Search
-* Statistics
-
-Planned:
-
+* HTML Reports
 * Docker Support
-* FastAPI Dashboard
-* Real-Time Logs
-* Enhanced Correlation Rules
+* Dashboard
+* Screenshot Gallery
+
+## Planned
+
+### Phase 13B.2
+
+* URL Inventory Page
+* Technology Inventory Page
+* Scan History Page
+
+### Phase 14
+
+* Nuclei Integration
+
+### Phase 15
+
+* JavaScript Analysis
+
+### Phase 16
+
+* Notifications
+
+  * Discord
+  * Slack
+  * Telegram
+
+### Phase 17
+
+* Live Dashboard
+* WebSockets
+* Real-time Scan Progress
+
+---
+
+# Example Dashboard
+
+Features currently available:
+
+* Dashboard Overview
+* Asset Inventory
+* Findings Viewer
+* Screenshot Gallery
+
+---
+
+# Disclaimer
+
+This tool is intended for authorized security testing, bug bounty programs, and defensive security assessments only.
+
+Users are responsible for complying with all applicable laws, policies, and program rules.
+
+---
+
+# Author
+
+<mark>l0lh4ck3r</mark>
+
+GitHub:
+https://github.com/l0lh4ck3r
