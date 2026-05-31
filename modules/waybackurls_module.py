@@ -43,6 +43,9 @@ class WaybackUrlsModule(ReconModule):
                 .read_text()
                 .splitlines()
             )
+            print(
+                f"[WAYBACK] Collected {len(urls)} URLs"
+            )
 
             engine = (
                 CorrelationEngine(
@@ -50,12 +53,21 @@ class WaybackUrlsModule(ReconModule):
                 )
             )
 
+            imported = 0
+            
             for url in urls:
 
                 context.repository.add_discovered_url(
                     context.scan_id,
                     url,
                     "waybackurls"
+                )
+                imported += 1
+
+                engine.analyze_url(url)
+
+                print(
+                    f"[WAYBACK] Imported {imported} URLs"
                 )
 
                 engine.analyze_url(

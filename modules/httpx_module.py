@@ -1,6 +1,7 @@
 from core.module import ReconModule
 from core.toolrunner import ToolRunner
 from correlation.scorer import Scorer
+from pathlib import Path
 
 class HttpxModule(ReconModule):
 
@@ -47,7 +48,7 @@ class HttpxModule(ReconModule):
             return
 
         cmd = (
-            f"httpx "
+            f"{Path.home()}/go/bin/httpx "
             f"-l {input_file} "
             f"-silent "
             f"-title "
