@@ -13,3 +13,15 @@ logs/
 
 .vscode/
 .idea/
+
+# Reports
+
+report.html
+
+# Dashboard screenshots
+
+screenshots/
+
+# SecLists cache
+
+wordlists/SecLists/**/**pycache**/

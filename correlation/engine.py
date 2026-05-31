@@ -16,25 +16,19 @@ class CorrelationEngine:
         url
     ):
 
-        score = (
-            self.scorer.score(
+        finding = (
+            self.scorer.match(
                 url
             )
         )
 
-        if score <= 0:
+        if not finding:
 
             return
 
-        severity = (
-            self.scorer.severity(
-                score
-            )
-        )
-
         self.repository.add_finding(
-            severity,
-            score,
-            "Interesting URL Detected",
+            finding["severity"],
+            finding["score"],
+            finding["title"],
             url
         )

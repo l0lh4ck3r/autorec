@@ -1,55 +1,95 @@
 RULES = {
-
-# Critical
-
-".git": 100,
-
-".env": 100,
-
-"secret": 100,
-
-"backup": 90,
-
-"dump": 90,
-
-# High
-
-"graphql": 80,
-
-"swagger": 80,
-
-"api-docs": 80,
-
-"redoc": 80,
-
-"jenkins": 80,
-
-"kibana": 80,
-
-# Medium
-
-"admin": 50,
-
-"administrator": 50,
-
-"dashboard": 50,
-
-"manage": 50,
-
-"login": 40,
-
-"portal": 40,
-
-# Low
-
-"test": 20,
-
-"staging": 20,
-
-"beta": 20,
-
-"dev": 20,
-
-"old": 20
-
-}
+    
+    ".git": {
+        "title": "Exposed Git Repository",
+        "severity": "Critical",
+        "score": 100,
+        "recommendation": "Verify that the .git directory is not publicly accessible."
+    },
+    
+    ".env": {
+        "title": "Environment File Exposure",
+        "severity": "Critical",
+        "score": 100,
+        "recommendation": "Sensitive configuration may be exposed."
+    },
+    
+    "backup": {
+        "title": "Backup File Exposure",
+        "severity": "High",
+        "score": 90,
+        "recommendation": "Review exposed backup files."
+    },
+    
+    "dump": {
+        "title": "Database Dump Exposure",
+        "severity": "High",
+        "score": 90,
+        "recommendation": "Database dumps should never be public."
+    },
+    
+    "graphql": {
+        "title": "GraphQL Endpoint Found",
+        "severity": "High",
+        "score": 80,
+        "recommendation": "Review GraphQL schema exposure."
+    },
+    
+    "swagger": {
+        "title": "Swagger Documentation Found",
+        "severity": "High",
+        "score": 80,
+        "recommendation": "Review exposed API documentation."
+    },
+    
+    "api-docs": {
+        "title": "API Documentation Found",
+        "severity": "High",
+        "score": 80,
+        "recommendation": "Review exposed API documentation."
+    },
+    
+    "redoc": {
+        "title": "API Documentation Found",
+        "severity": "High",
+        "score": 80,
+        "recommendation": "Review exposed API documentation."
+    },
+    
+    "admin": {
+        "title": "Administrative Interface Found",
+        "severity": "Medium",
+        "score": 50,
+        "recommendation": "Review access controls."
+    },
+    
+    "administrator": {
+        "title": "Administrative Interface Found",
+        "severity": "Medium",
+        "score": 50,
+        "recommendation": "Review access controls."
+    },
+    
+    "dashboard": {
+        "title": "Administrative Dashboard Found",
+        "severity": "Medium",
+        "score": 50,
+        "recommendation": "Review dashboard access."
+    },
+    
+    "login": {
+        "title": "Login Portal Found",
+        "severity": "Low",
+        "score": 40,
+        "recommendation": "Review authentication controls."
+    },
+    
+    "portal": {
+        "title": "Portal Found",
+        "severity": "Low",
+        "score": 40,
+        "recommendation": "Review portal exposure."
+    }
+    
+    }
+    

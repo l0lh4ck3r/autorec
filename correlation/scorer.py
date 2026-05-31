@@ -1,21 +1,27 @@
 from correlation.rules import RULES
 
-
 class Scorer:
 
-    def score(self, text):
-
-        total = 0
+    def match(self, text):
 
         text = text.lower()
 
-        for keyword, points in RULES.items():
+        for keyword, data in RULES.items():
 
             if keyword.lower() in text:
 
-                total += points
+                return data
 
-        return total
+        return None
+
+    def score(self, text):
+
+        finding = self.match(text)
+
+        if not finding:
+            return 0
+
+        return finding["score"]
 
     def severity(self, score):
 
