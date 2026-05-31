@@ -32,7 +32,11 @@ class HttpxModule(ReconModule):
 
         output_file = (
             http_dir
-            / "alive.txt"
+            / "alive_urls.txt"
+        )
+        urls_only_file = (
+            http_dir
+            / "alive_urls.txt"
         )
 
         if not input_file.exists():
@@ -78,8 +82,13 @@ class HttpxModule(ReconModule):
                 .read_text()
                 .splitlines()
             )
+            clean_urls = []
 
             for line in lines:
+                host = line.split()[0]
+
+                clean_urls.append(host)
+
                 if "[" in line and "]" in line:
 
                     try:
@@ -145,6 +154,9 @@ class HttpxModule(ReconModule):
                             score=score,
                             title="Interesting Asset",
                             evidence=line
+                        )
+                        urls_only_file.write_text(
+                        "\n".join(clean_urls)
                         )
 
         return result

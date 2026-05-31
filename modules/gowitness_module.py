@@ -15,7 +15,7 @@ class GowitnessModule(ReconModule):
         alive_file = (
             context.workspace
             / "http"
-            / "alive.txt"
+            / "alive_urls.txt"
         )
 
         if not alive_file.exists():
