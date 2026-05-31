@@ -104,6 +104,94 @@ async def run_scan(
     print(
         f"[+] Workspace: {scan_dir}"
     )
+    
+async def watch_target(
+    target,
+    profile
+):
+
+    print(
+        f"[*] Watching {target}"
+    )
+
+    await run_scan(
+        target,
+        profile
+    )
+
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    engine = DiffEngine(
+        repo
+    )
+
+    print()
+
+    print("=" * 50)
+    print("NEW ASSETS")
+    print("=" * 50)
+
+    assets = engine.new_assets()
+
+    if assets:
+
+        for asset in assets:
+
+            print(asset)
+
+    else:
+
+        print(
+            "No differences found"
+        )
+
+    print()
+
+    print("=" * 50)
+    print("NEW URLS")
+    print("=" * 50)
+
+    urls = engine.new_urls()
+
+    if urls:
+
+        for url in urls:
+
+            print(url)
+
+    else:
+
+        print(
+            "No new URLs"
+        )
+
+    print()
+
+    print("=" * 50)
+    print("NEW TECHNOLOGIES")
+    print("=" * 50)
+
+    technologies = (
+        engine.new_technologies()
+    )
+
+    if technologies:
+
+        for tech in technologies:
+
+            print(tech)
+
+    else:
+
+        print(
+            "No new technologies"
+        )
 
 
 @app.command()
@@ -255,7 +343,125 @@ def diff():
         for tech in technologies:
 
             print(tech)
+@app.command()
+def rebuild_report():
 
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    reporter = HTMLReport()
+
+    reporter.generate(
+        ".",
+        repo.get_latest_target(),
+        repo.get_findings(),
+        repo.get_screenshots()
+    )
+
+    print(
+        "[+] Report rebuilt"
+    )
+@app.command()
+def stats():
+
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    print()
+
+    print("=" * 50)
+    print("AUTOREC STATS")
+    print("=" * 50)
+
+    print(
+        f"Assets: "
+        f"{repo.count_assets()}"
+    )
+
+    print(
+        f"URLs: "
+        f"{repo.count_urls()}"
+    )
+
+    print(
+        f"Technologies: "
+        f"{repo.count_technologies()}"
+    )
+
+    print(
+        f"Screenshots: "
+        f"{repo.count_screenshots()}"
+    )
+
+    print(
+        f"Findings: "
+        f"{repo.count_findings()}"
+    )
+@app.command()
+def screenshots():
+
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    screenshots = (
+        repo.get_screenshots()
+    )
+
+    print()
+
+    print("=" * 50)
+    print("SCREENSHOTS")
+    print("=" * 50)
+
+    if not screenshots:
+
+        print(
+            "No screenshots found"
+        )
+
+        return
+
+    for shot in screenshots:
+
+        print()
+
+        print(
+            f"Host: "
+            f"{shot['host']}"
+        )
+
+        print(
+            f"Path: "
+            f"{shot['image_path']}"
+        )
+
+@app.command()
+def watch(
+    target: str,
+    profile: str = "full"
+):
+
+    asyncio.run(
+        watch_target(
+            target,
+            profile
+        )
+    )
 
 if __name__ == "__main__":
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-
 class Repository:
+
 
     def __init__(self, db):
         self.db = db
@@ -203,6 +203,7 @@ class Repository:
 
     def add_technology(
         self,
+        scan_id,
         host,
         technology
     ):
@@ -210,30 +211,23 @@ class Repository:
         self.db.execute(
             """
             INSERT INTO technologies(
+                scan_id,
                 host,
                 technology
             )
-            VALUES (?, ?)
+            VALUES (?, ?, ?)
             """,
             (
+                scan_id,
                 host,
                 technology
             )
         )
+
     # -------------------------
-    # SCAN HELPERS
+    # URL INVENTORY
     # -------------------------
 
-    def get_latest_scan(self):
-
-        result = self.db.fetchone(
-            """
-            SELECT *
-            FROM scans
-            ORDER BY id DESC
-            LIMIT 1
-            """
-        )
     def add_discovered_url(
         self,
         scan_id,
@@ -260,6 +254,7 @@ class Repository:
                 now
             )
         )
+
     def get_urls(self):
 
         return self.db.fetchall(
@@ -268,28 +263,11 @@ class Repository:
             FROM url_inventory
             """
         )
-    def add_technology(
-        self,
-        scan_id,
-        host,
-        technology
-    ): 
 
-        self.db.execute(
-            """
-            INSERT INTO technologies(
-                scan_id,
-                host,
-                technology
-            )
-            VALUES (?, ?, ?)
-            """,
-            (
-                scan_id,
-                host,
-                technology
-            )
-        )
+    # -------------------------
+    # SCREENSHOTS
+    # -------------------------
+
     def add_screenshot(
         self,
         scan_id,
@@ -316,6 +294,7 @@ class Repository:
                 now
             )
         )
+
     def get_screenshots(self):
 
         return self.db.fetchall(
@@ -325,4 +304,106 @@ class Repository:
             ORDER BY id DESC
             """
         )
+
+    # -------------------------
+    # HELPERS
+    # -------------------------
+
+    def get_latest_scan(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT *
+            FROM scans
+            ORDER BY id DESC
+            LIMIT 1
+            """
+        )
+
         return result
+
+    def get_latest_target(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT target
+            FROM scans
+            ORDER BY id DESC
+            LIMIT 1
+            """
+        )
+    def count_assets(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT COUNT(*) AS count
+            FROM asset_inventory
+            """
+        )
+
+        return result["count"]
+
+
+    def count_urls(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT COUNT(*) AS count
+            FROM url_inventory
+            """
+        )
+
+        return result["count"]
+
+
+    def count_technologies(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT COUNT(*) AS count
+            FROM technologies
+            """
+        )
+
+        return result["count"]
+
+
+    def count_screenshots(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT COUNT(*) AS count
+            FROM screenshots
+            """
+        )
+
+        return result["count"]
+
+
+    def count_findings(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT COUNT(*) AS count
+            FROM findings
+            """
+        )
+
+        return result["count"]
+
+        
+    def get_screenshot_count(self):
+
+        result = self.db.fetchone(
+            """
+            SELECT COUNT(*) AS count
+            FROM screenshots
+            """
+        )
+
+        return result["count"]
+
+        if result:
+            return result["target"]
+
+        return "Unknown"
