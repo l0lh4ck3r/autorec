@@ -61,7 +61,7 @@ class GowitnessModule(ReconModule):
             context.repository.add_screenshot(
                 context.scan_id,
                 image.stem,
-                str(image)
+                f"screenshots/{image.name}"
             )
 
         print(

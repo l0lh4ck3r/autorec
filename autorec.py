@@ -88,7 +88,8 @@ async def run_scan(
     reporter.generate(
         scan_dir,
         target,
-        repo.get_findings()
+        repo.get_findings(),
+        repo.get_screenshots()
     )
 
     shutil.copy(

@@ -12,12 +12,12 @@ class HTMLReport:
         self,
         workspace,
         target,
-        findings
+        findings,
+        screenshots
     ):
 
         env = Environment(
-            loader=
-            FileSystemLoader(
+            loader=FileSystemLoader(
                 "templates"
             )
         )
@@ -28,7 +28,8 @@ class HTMLReport:
 
         html = template.render(
             target=target,
-            findings=findings
+            findings=findings,
+            screenshots=screenshots
         )
 
         report_file = (
