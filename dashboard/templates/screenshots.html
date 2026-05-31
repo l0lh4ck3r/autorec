@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Screenshots</title>
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<h1>Screenshots</h1>
+
+{% for shot in screenshots %}
+
+<div style="margin-bottom:20px">
+
+<h3>{{ shot.host }}</h3>
+
+<div class="card mb-4 shadow">
+
+<div class="card-header">
+{{ shot.host }}
+</div>
+
+<div class="card-body">
+
+<img
+class="img-fluid"
+src="/image?path={{ shot.image_path }}">
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>

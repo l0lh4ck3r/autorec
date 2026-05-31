@@ -1,0 +1,17 @@
+venv/
+**pycache**/
+*.pyc
+
+output/
+screenshots/
+
+*.db
+*.sqlite
+
+.git/
+.gitignore
+
+.vscode/
+.idea/
+
+logs/

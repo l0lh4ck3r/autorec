@@ -34,6 +34,18 @@ class GauModule(ReconModule):
             f"gau {context.target} "
             f"> {output_file}"
         )
+        print("=" * 80)
+        print("[HTTPX CMD]")
+        print(cmd)
+        print("=" * 80)
+
+        which_result = await ToolRunner.run(
+            "which httpx"
+        )
+
+        print(
+            f"[HTTPX BIN] {which_result['stdout'].strip()}"
+        )
 
         result = await ToolRunner.run(cmd)
 
@@ -45,11 +57,15 @@ class GauModule(ReconModule):
                 .splitlines()
             )
 
-            engine = (
-                CorrelationEngine(
-                    context.repository
-                )
+            print(
+                f"[GAU] Collected {len(urls)} URLs"
             )
+
+            engine = CorrelationEngine(
+                context.repository
+            )
+
+            imported = 0
 
             for url in urls:
 
@@ -59,7 +75,15 @@ class GauModule(ReconModule):
                     "gau"
                 )
 
-                engine.analyze_url(
+                imported += 1
+
+                engine.analyze_url(url)
+
+            print(
+                f"[GAU] Imported {imported} URLs"
+            )
+
+            engine.analyze_url(
                     url
                 )
 

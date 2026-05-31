@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AutoRec Dashboard</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+    {% include 'navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="row mb-4">
+
+            <div class="col">
+                <h1 class="display-5">
+                    AutoRec Dashboard
+                </h1>
+
+                <p class="text-muted">
+                    Reconnaissance Overview
+                </p>
+            </div>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Assets -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+                            Assets
+                        </h6>
+
+                        <h1>
+                            {{ stats.assets }}
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- URLs -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+                            URLs
+                        </h6>
+
+                        <h1>
+                            {{ stats.urls }}
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Findings -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+                            Findings
+                        </h6>
+
+                        <h1>
+                            {{ stats.findings }}
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Technologies -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+                            Technologies
+                        </h6>
+
+                        <h1>
+                            {{ stats.technologies }}
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Screenshots -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+                            Screenshots
+                        </h6>
+
+                        <h1>
+                            {{ stats.screenshots }}
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="my-5">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+                        Quick Navigation
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="d-grid gap-2">
+
+                            <a
+                                href="/assets"
+                                class="btn btn-primary">
+                                View Assets
+                            </a>
+
+                            <a
+                                href="/findings"
+                                class="btn btn-warning">
+                                View Findings
+                            </a>
+
+                            <a
+                                href="/screenshots"
+                                class="btn btn-success">
+                                View Screenshots
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+                        Scan Status
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+                            AutoRec Dashboard is connected to:
+                        </p>
+
+                        <code>
+                            latest.db
+                        </code>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

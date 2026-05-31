@@ -51,3 +51,17 @@ Planned
 * Project Workspaces
 * Plugin System
 * Distributed Scanning
+
+## Docker
+
+Build:
+
+docker compose build
+
+Run:
+
+docker compose run --rm autorec python autorec.py scan example.com --profile full
+
+Dashboard:
+
+docker compose run --rm autorec python autorec.py dashboard
