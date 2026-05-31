@@ -1,6 +1,9 @@
 from core.module import ReconModule
 from core.toolrunner import ToolRunner
 
+from correlation.engine import (
+CorrelationEngine
+)
 
 class WaybackUrlsModule(ReconModule):
 
@@ -41,12 +44,22 @@ class WaybackUrlsModule(ReconModule):
                 .splitlines()
             )
 
+            engine = (
+                CorrelationEngine(
+                    context.repository
+                )
+            )
+
             for url in urls:
 
                 context.repository.add_discovered_url(
                     context.scan_id,
                     url,
                     "waybackurls"
+                )
+
+                engine.analyze_url(
+                    url
                 )
 
         return result

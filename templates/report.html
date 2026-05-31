@@ -4,13 +4,29 @@
 
 <head>
 
-<title>AutoRec Report</title>
+<title>AutoRec Dashboard</title>
 
 <style>
 
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #f5f5f5;
 }
 
 img {
@@ -30,33 +46,131 @@ img {
     margin-bottom: 20px;
 }
 
+.summary-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.summary-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    min-width: 180px;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<h1>AutoRec Report</h1>
+<h1>AutoRec Dashboard</h1>
 
 <h2>{{ target }}</h2>
 
 <div class="section">
 
+<h2>Summary</h2>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<strong>Assets</strong><br>
+{{ stats.assets }}
+</div>
+
+<div class="summary-card">
+<strong>Technologies</strong><br>
+{{ stats.technologies }}
+</div>
+
+<div class="summary-card">
+<strong>Findings</strong><br>
+{{ stats.findings }}
+</div>
+
+<div class="summary-card">
+<strong>Screenshots</strong><br>
+{{ stats.screenshots }}
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
 <h2>Findings</h2>
 
-<ul>
+<table>
+
+<tr>
+<th>Severity</th>
+<th>Score</th>
+<th>Title</th>
+<th>Evidence</th>
+</tr>
 
 {% for finding in findings %}
 
-<li>
-[{{ finding.severity }}]
-{{ finding.title }}
-({{ finding.score }})
-</li>
+<tr>
+<td>{{ finding.severity }}</td>
+<td>{{ finding.score }}</td>
+<td>{{ finding.title }}</td>
+<td>{{ finding.evidence }}</td>
+</tr>
 
 {% endfor %}
 
-</ul>
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>Technologies</h2>
+
+<table>
+
+<tr>
+<th>Host</th>
+<th>Technology</th>
+</tr>
+
+{% for tech in technologies %}
+
+<tr>
+<td>{{ tech.host }}</td>
+<td>{{ tech.technology }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>Assets</h2>
+
+<table>
+
+<tr>
+<th>Type</th>
+<th>Value</th>
+</tr>
+
+{% for asset in assets %}
+
+<tr>
+<td>{{ asset.asset_type }}</td>
+<td>{{ asset.asset_value }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
 
 </div>
 
@@ -71,17 +185,12 @@ img {
 <div class="card">
 
 <p>
-
 <strong>Host:</strong>
-
 {{ screenshot.host }}
-
 </p>
 
 <a href="{{ screenshot.image_path }}">
-
 <img src="{{ screenshot.image_path }}">
-
 </a>
 
 </div>

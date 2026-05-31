@@ -104,7 +104,7 @@ async def run_scan(
     print(
         f"[+] Workspace: {scan_dir}"
     )
-    
+
 async def watch_target(
     target,
     profile
@@ -461,6 +461,39 @@ def watch(
             target,
             profile
         )
+    )
+@app.command()
+def dashboard():
+
+    db = Database(
+        "latest.db"
+    )
+
+    repo = Repository(
+        db
+    )
+
+    reporter = HTMLReport()
+
+    stats = {
+        "assets": repo.count_assets(),
+        "technologies": repo.count_technologies(),
+        "findings": repo.count_findings(),
+        "screenshots": repo.count_screenshots()
+    }
+
+    reporter.generate(
+        ".",
+        repo.get_latest_target(),
+        repo.get_findings(),
+        repo.get_screenshots(),
+        repo.get_assets(),
+        repo.get_technologies(),
+        stats
+    )
+
+    print(
+        "[+] Dashboard generated: report.html"
     )
 
 if __name__ == "__main__":

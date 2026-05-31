@@ -1,6 +1,9 @@
 from core.module import ReconModule
 from core.toolrunner import ToolRunner
 
+from correlation.engine import (
+CorrelationEngine
+)
 
 class GauModule(ReconModule):
 
@@ -42,12 +45,22 @@ class GauModule(ReconModule):
                 .splitlines()
             )
 
+            engine = (
+                CorrelationEngine(
+                    context.repository
+                )
+            )
+
             for url in urls:
 
                 context.repository.add_discovered_url(
                     context.scan_id,
                     url,
                     "gau"
+                )
+
+                engine.analyze_url(
+                    url
                 )
 
         return result

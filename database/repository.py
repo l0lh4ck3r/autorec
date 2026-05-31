@@ -2,7 +2,6 @@ from datetime import datetime
 
 class Repository:
 
-
     def __init__(self, db):
         self.db = db
 
@@ -224,6 +223,16 @@ class Repository:
             )
         )
 
+    def get_technologies(self):
+
+        return self.db.fetchall(
+            """
+            SELECT *
+            FROM technologies
+            ORDER BY technology
+            """
+        )
+
     # -------------------------
     # URL INVENTORY
     # -------------------------
@@ -261,6 +270,7 @@ class Repository:
             """
             SELECT *
             FROM url_inventory
+            ORDER BY discovered_at DESC
             """
         )
 
@@ -311,7 +321,7 @@ class Repository:
 
     def get_latest_scan(self):
 
-        result = self.db.fetchone(
+        return self.db.fetchone(
             """
             SELECT *
             FROM scans
@@ -319,8 +329,6 @@ class Repository:
             LIMIT 1
             """
         )
-
-        return result
 
     def get_latest_target(self):
 
@@ -332,6 +340,16 @@ class Repository:
             LIMIT 1
             """
         )
+
+        if result:
+            return result["target"]
+
+        return "Unknown"
+
+    # -------------------------
+    # COUNTS
+    # -------------------------
+
     def count_assets(self):
 
         result = self.db.fetchone(
@@ -342,7 +360,6 @@ class Repository:
         )
 
         return result["count"]
-
 
     def count_urls(self):
 
@@ -355,7 +372,6 @@ class Repository:
 
         return result["count"]
 
-
     def count_technologies(self):
 
         result = self.db.fetchone(
@@ -366,7 +382,6 @@ class Repository:
         )
 
         return result["count"]
-
 
     def count_screenshots(self):
 
@@ -379,7 +394,6 @@ class Repository:
 
         return result["count"]
 
-
     def count_findings(self):
 
         result = self.db.fetchone(
@@ -390,20 +404,3 @@ class Repository:
         )
 
         return result["count"]
-
-        
-    def get_screenshot_count(self):
-
-        result = self.db.fetchone(
-            """
-            SELECT COUNT(*) AS count
-            FROM screenshots
-            """
-        )
-
-        return result["count"]
-
-        if result:
-            return result["target"]
-
-        return "Unknown"
