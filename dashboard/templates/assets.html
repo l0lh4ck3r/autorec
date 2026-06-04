@@ -51,7 +51,72 @@
             <div class="card-body">
 
                 {% if assets %}
+                <div class="mb-3">
 
+                    <a
+                        class="btn btn-primary btn-sm"
+                        href="/assets">
+
+                        All
+
+                    </a>
+
+                    <a
+                        class="btn btn-outline-primary btn-sm"
+                        href="/assets?type=subdomain">
+
+                        Subdomains
+
+                    </a>
+
+                    <a
+                        class="btn btn-outline-success btn-sm"
+                        href="/assets?type=resolved_host">
+
+                        Resolved Hosts
+
+                    </a>
+
+                    <a
+                        class="btn btn-outline-warning btn-sm"
+                        href="/assets?type=http_service">
+
+                        HTTP Services
+
+                    </a>
+
+                </div>
+                <div class="mb-3">
+
+                    <strong>
+                        Sort:
+                    </strong>
+
+                    <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="/assets?sort=newest">
+
+                        Newest
+
+                    </a>
+
+                    <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="/assets?sort=oldest">
+
+                        Oldest
+
+                    </a>
+
+                    <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="/assets?sort=type">
+
+                        Type
+
+                    </a>
+
+                </div>
                 <div class="table-responsive">
 
                     <table class="table table-striped table-hover align-middle">

@@ -26,6 +26,63 @@
         Findings
     </h1>
 
+    <div class="mb-3">
+
+        <a class="btn btn-primary btn-sm"
+           href="/findings">
+
+            All
+
+        </a>
+
+        <a class="btn btn-outline-danger btn-sm"
+           href="/findings?severity=critical">
+
+            Critical
+
+        </a>
+
+        <a class="btn btn-outline-warning btn-sm"
+           href="/findings?severity=high">
+
+            High
+
+        </a>
+
+        <a class="btn btn-outline-info btn-sm"
+           href="/findings?severity=medium">
+
+            Medium
+
+        </a>
+
+    </div>
+
+    <div class="mb-3">
+
+        <a class="btn btn-outline-secondary btn-sm"
+           href="/findings?sort=high">
+
+            Highest Score
+
+        </a>
+
+        <a class="btn btn-outline-secondary btn-sm"
+           href="/findings?sort=low">
+
+            Lowest Score
+
+        </a>
+
+        <a class="btn btn-outline-secondary btn-sm"
+           href="/findings?sort=severity">
+
+            Severity
+
+        </a>
+
+    </div>
+
     {% if findings %}
 
     <table class="table table-striped table-hover shadow-sm">
@@ -33,10 +90,12 @@
         <thead class="table-dark">
 
             <tr>
+
                 <th>Severity</th>
                 <th>Score</th>
                 <th>Title</th>
                 <th>Evidence</th>
+
             </tr>
 
         </thead>
@@ -54,9 +113,13 @@
                 <td>{{ finding.title }}</td>
 
                 <td>
+
                     <code>
+
                         {{ finding.evidence }}
+
                     </code>
+
                 </td>
 
             </tr>
