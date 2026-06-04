@@ -2,372 +2,240 @@
 
 ## Current Version
 
-**v0.4.0**
+v0.4.0
 
 ---
 
-# Phase 1 - Foundation ✅
+# Completed
+
+## Phase 1 - Foundation
 
 * Project Structure
 * Module Framework
-* Workspace Management
-* Event Bus
-* State Management
 * Scan Profiles
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 2 - Database Layer ✅
+## Phase 2 - Database Layer
 
 * SQLite Integration
 * Repository Pattern
-* Scan Tracking
 * Asset Storage
 * Findings Storage
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 3 - Subdomain Discovery ✅
+## Phase 3 - Subdomain Discovery
 
-### Subfinder Integration
+* Subfinder Integration
 
-* Subdomain Enumeration
-* Asset Inventory Population
-* Database Integration
-
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 4 - DNS Resolution ✅
+## Phase 4 - DNS Resolution
 
-### DNSX Integration
+* DNSX Integration
 
-* Host Resolution
-* Resolved Host Tracking
-* Asset Correlation
-
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 5 - HTTP Enumeration ✅
+## Phase 5 - HTTP Enumeration
 
-### HTTPX Integration
-
-* Alive Host Detection
-* Status Code Collection
-* Title Detection
+* HTTPX Integration
 * Technology Detection
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 6 - URL Collection ✅
+## Phase 6 - URL Collection
 
-### GAU
-
-* Historical URL Collection
+* GAU Integration
+* WaybackURLs Integration
 * URL Inventory Storage
 
-### WaybackURLs
-
-* Archived URL Collection
-* URL Inventory Storage
-
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 7 - Screenshot Collection ✅
+## Phase 7 - Screenshot Collection
 
-### GoWitness Integration
-
-* Screenshot Capture
+* GoWitness Integration
 * Screenshot Storage
-* Screenshot Inventory
 
-Status: **Completed**
-
----
-
-# Phase 8 - Reporting ✅
-
-### HTML Reports
-
-* Scan Summary
-* Asset Inventory
-* Findings Summary
-
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 9 - Correlation Engine ✅
+## Phase 8 - Reporting
 
-### Asset Correlation
+* HTML Reports
 
-* Interesting URL Detection
+Status: ✅
+
+---
+
+## Phase 9 - Correlation Engine
+
 * Asset Scoring
-* Severity Assignment
+* Findings Generation
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 10 - Scan Persistence ✅
-
-### Resume Capability
+## Phase 10 - Scan Persistence
 
 * Scan State Tracking
-* Recovery Support
+* Resume Support
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 11 - Docker Support ✅
-
-### Containerization
+## Phase 11 - Docker Support
 
 * Dockerfile
 * Docker Compose
-* Volume Mapping
-* Portable Deployment
+* Containerized Deployment
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 12 - Dashboard Core ✅
-
-### Flask Dashboard
+## Phase 12 - Dashboard Core
 
 * Dashboard Homepage
 * Statistics Overview
-* Navigation System
+* Navigation
 
-Status: **Completed**
+Status: ✅
 
 ---
 
-# Phase 13 - Dashboard Expansion 🚧
+## Phase 13 - Dashboard Expansion
 
-## Phase 13.1 ✅
-
-### Dashboard Pages
+### Phase 13.1
 
 * Asset Inventory
 * Findings Viewer
 * Screenshot Gallery
 
-Status: **Completed**
+Status: ✅
 
----
-
-## Phase 13.2
-
-### Inventory Pages
+### Phase 13.2
 
 * URL Inventory
 * Technology Inventory
 * Scan History
 
-Status: **Planned**
+Status: ✅
 
----
-
-## Phase 13.3
-
-### Dashboard Improvements
+### Phase 13.3
 
 * Search
-* Filtering
 * Pagination
+* Filtering
 * Sorting
 
-Status: **Planned**
+Status: 🚧 Next
+
+### Phase 13.4
+
+* Charts
+* Dashboard Widgets
+* Better Visualizations
+
+Status: Planned
 
 ---
 
-## Phase 13.4
+# Phase 14 - Nuclei Integration
 
-### UI Improvements
-
-* Bootstrap Styling
-* Dark Mode
-* Better Navigation
-* Responsive Design
-
-Status: **Planned**
-
----
-
-# Phase 14 - Vulnerability Scanning
-
-## Nuclei Integration
-
-* Template Execution
-* Vulnerability Storage
+* Vulnerability Scanning
 * Severity Tracking
 * Dashboard Integration
+* Nuclei Results Page
 
-Tables:
-
-* nuclei_results
-
-Status: **Planned**
+Status: Planned
 
 ---
 
 # Phase 15 - JavaScript Analysis
 
-### JavaScript Discovery
-
-* JS File Inventory
-* Endpoint Extraction
-* Secret Detection
+* JS Inventory
+* Endpoint Discovery
+* Secret Discovery
 * API Discovery
 
-Tables:
-
-* javascript_files
-
-Status: **Planned**
+Status: Planned
 
 ---
 
 # Phase 16 - Parameter Mining
 
-### URL Parameter Extraction
+* URL Parameter Extraction
+* Parameter Inventory
 
-Examples:
-
-* id=
-* page=
-* search=
-* redirect=
-
-Tables:
-
-* parameters
-
-Status: **Planned**
+Status: Planned
 
 ---
 
 # Phase 17 - Continuous Recon
 
-### Scan Comparison
-
-* New Assets
-* Removed Assets
-* New Technologies
-* New URLs
-
-Features:
-
-* Diff Reports
+* Asset Diffing
+* URL Diffing
+* Technology Diffing
 * Change Tracking
 
-Status: **Planned**
+Status: Planned
 
 ---
 
 # Phase 18 - Notifications
 
-### Integrations
-
 * Discord
 * Slack
 * Telegram
 
-Triggers:
-
-* New Asset
-* High Severity Finding
-* New Technology
-
-Status: **Planned**
+Status: Planned
 
 ---
 
 # Phase 19 - API Layer
 
-### REST API
+* REST API
+* JSON Export
 
-Endpoints:
-
-* /api/assets
-* /api/findings
-* /api/urls
-* /api/scans
-
-Status: **Planned**
+Status: Planned
 
 ---
 
 # Phase 20 - Real-Time Dashboard
 
-### Live Monitoring
-
+* Live Progress
 * WebSockets
-* Live Logs
-* Progress Tracking
-* Real-Time Statistics
+* Real-Time Logs
 
-Status: **Planned**
-
----
-
-# Future Ideas
-
-### Cloud Support
-
-* AWS Asset Discovery
-* Azure Asset Discovery
-* GCP Asset Discovery
-
-### Additional Recon Sources
-
-* Amass
-* Assetfinder
-* Katana
-* Hakrawler
-
-### Export Formats
-
-* PDF
-* JSON
-* CSV
-
-### Authentication
-
-* User Accounts
-* Role-Based Access
-
-### Multi-Target Campaigns
-
-* Organization Tracking
-* Portfolio Monitoring
+Status: Planned
 
 ---
 
 # Long-Term Vision
 
-AutoRec aims to become a complete reconnaissance and attack-surface management platform capable of:
+AutoRec aims to become a lightweight attack surface management and continuous reconnaissance platform capable of:
 
-* Continuous Reconnaissance
-* Asset Inventory Management
+* Asset Discovery
 * Vulnerability Discovery
 * Change Detection
 * Reporting
-* Team Collaboration
-* Real-Time Monitoring
+* Monitoring
+* Automation
 
-while remaining lightweight, modular, and easy to deploy.
+while remaining simple to deploy, modular, and easy to extend.

@@ -38,6 +38,66 @@
 
     </div>
 
+    <!-- Filters -->
+
+    <div class="mb-3">
+
+        <a
+            class="btn btn-primary btn-sm"
+            href="/urls">
+
+            All
+
+        </a>
+
+        <a
+            class="btn btn-outline-info btn-sm"
+            href="/urls?source=gau">
+
+            GAU
+
+        </a>
+
+        <a
+            class="btn btn-outline-warning btn-sm"
+            href="/urls?source=waybackurls">
+
+            WaybackURLs
+
+        </a>
+
+    </div>
+
+    <!-- Sorting -->
+
+    <div class="mb-3">
+
+        <a
+            class="btn btn-outline-secondary btn-sm"
+            href="/urls?sort=newest">
+
+            Newest
+
+        </a>
+
+        <a
+            class="btn btn-outline-secondary btn-sm"
+            href="/urls?sort=oldest">
+
+            Oldest
+
+        </a>
+
+        <a
+            class="btn btn-outline-secondary btn-sm"
+            href="/urls?sort=source">
+
+            Source
+
+        </a>
+
+    </div>
+
     <div class="card shadow-sm">
 
         <div class="card-header">
@@ -127,6 +187,60 @@
         </div>
 
     </div>
+
+    <!-- Pagination -->
+
+    <nav class="mt-4">
+
+        <ul class="pagination justify-content-center">
+
+            {% if page > 1 %}
+
+            <li class="page-item">
+
+                <a
+                    class="page-link"
+                    href="/urls?page={{ page - 1 }}">
+
+                    Previous
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+            <li class="page-item active">
+
+                <span class="page-link">
+
+                    Page {{ page }}
+                    of
+                    {{ total_pages }}
+
+                </span>
+
+            </li>
+
+            {% if page < total_pages %}
+
+            <li class="page-item">
+
+                <a
+                    class="page-link"
+                    href="/urls?page={{ page + 1 }}">
+
+                    Next
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
 
 </div>
 
