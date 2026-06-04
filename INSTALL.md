@@ -1,82 +1,319 @@
-# Installation Guide
+# INSTALL.md
 
-## Parrot OS
+## Supported Platforms
 
-Update system:
+### Tested
+
+* Parrot OS 7.x
+* Kali Linux
+* Ubuntu 24.04+
+* Debian 12+
+
+---
+
+## Prerequisites
+
+### Python
 
 ```bash
-sudo apt update
-sudo apt upgrade -y
+python3 --version
 ```
 
-Install Python:
+Required:
 
-```bash
-sudo apt install python3 python3-pip python3-venv -y
+```text
+Python 3.12+
 ```
 
-Install Go:
+---
+
+### Go
 
 ```bash
-sudo apt install golang-go -y
+go version
 ```
 
-Install Recon Tools:
+Required:
 
-```bash
-go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-
-go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest
-
-go install github.com/projectdiscovery/httpx/cmd/httpx@latest
-
-go install github.com/lc/gau/v2/cmd/gau@latest
-
-go install github.com/tomnomnom/waybackurls@latest
-
-go install github.com/sensepost/gowitness@latest
+```text
+Go 1.22+
 ```
 
-Add Go binaries to PATH:
+---
+
+### Git
 
 ```bash
-echo 'export PATH=$PATH:$HOME/go/bin' >> ~/.bashrc
-
-source ~/.bashrc
+git --version
 ```
 
-Clone AutoRec:
+---
+
+## Clone Repository
 
 ```bash
-git clone <repository>
+git clone https://github.com/l0lh4ck3r/autorec.git
 
 cd autorec
 ```
 
-Create Virtual Environment:
+---
+
+## Python Environment
+
+Create virtual environment:
 
 ```bash
-python -m venv venv
+python3 -m venv venv
+```
 
+Activate:
+
+```bash
 source venv/bin/activate
 ```
 
-Install Python Requirements:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
+---
+
+## Install Recon Tools
+
+### Subfinder
+
+```bash
+go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+```
+
+### DNSX
+
+```bash
+go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+```
+
+### HTTPX
+
+```bash
+go install github.com/projectdiscovery/httpx/cmd/httpx@latest
+```
+
+### GAU
+
+```bash
+go install github.com/lc/gau/v2/cmd/gau@latest
+```
+
+### WaybackURLs
+
+```bash
+go install github.com/tomnomnom/waybackurls@latest
+```
+
+### GoWitness
+
+Install according to your operating system.
+
 Verify:
+
+```bash
+gowitness version
+```
+
+---
+
+## Verify Installation
+
+Run:
+
+```bash
+subfinder -version
+
+dnsx -version
+
+~/go/bin/httpx --version
+
+gau --version
+
+waybackurls
+```
+
+---
+
+## Important HTTPX Note
+
+AutoRec uses the ProjectDiscovery HTTPX binary.
+
+Some systems may also have the Python package:
+
+```text
+httpx
+```
+
+installed.
+
+Verify:
+
+```bash
+which -a httpx
+```
+
+Expected:
+
+```text
+/home/<user>/go/bin/httpx
+```
+
+If multiple binaries exist, ensure the ProjectDiscovery version is used.
+
+---
+
+## Initialize Database
+
+Run:
 
 ```bash
 python autorec.py doctor
 ```
 
-## Kali Linux
+or:
 
-Same steps as Parrot OS.
+```bash
+python autorec.py scan example.com --profile full
+```
 
-## Ubuntu
+This creates:
 
-Same steps as Parrot OS.
+```text
+latest.db
+```
+
+---
+
+## Running AutoRec
+
+### Full Scan
+
+```bash
+python autorec.py scan example.com --profile full
+```
+
+### Dashboard
+
+```bash
+python dashboard/app.py
+```
+
+Open:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## Docker Installation
+
+Build:
+
+```bash
+docker compose build
+```
+
+Run:
+
+```bash
+docker compose up
+```
+
+---
+
+## Troubleshooting
+
+### HTTPX Error
+
+Error:
+
+```text
+No such option '-l'
+```
+
+Cause:
+
+Python HTTPX package is being used instead of ProjectDiscovery HTTPX.
+
+Verify:
+
+```bash
+which -a httpx
+```
+
+Use:
+
+```bash
+~/go/bin/httpx --version
+```
+
+---
+
+### Docker Error
+
+Error:
+
+```text
+failed to connect to docker API
+```
+
+Check:
+
+```bash
+docker info
+```
+
+Ensure:
+
+```bash
+DOCKER_HOST
+```
+
+is not pointing to an invalid Podman socket.
+
+Verify:
+
+```bash
+echo $DOCKER_HOST
+```
+
+Expected:
+
+```text
+(empty)
+```
+
+or:
+
+```text
+unix:///var/run/docker.sock
+```
+
+---
+
+### Database Check
+
+Verify:
+
+```bash
+sqlite3 latest.db
+```
+
+Useful queries:
+
+```sql
+SELECT COUNT(*) FROM asset_inventory;
+SELECT COUNT(*) FROM url_inventory;
+SELECT COUNT(*) FROM findings;
+SELECT COUNT(*) FROM screenshots;
+```
