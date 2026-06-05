@@ -78,8 +78,29 @@ def index():
 
         "scans": query_one(
             "SELECT COUNT(*) FROM scans"
-        )
+        ),
     }
+    critical_count = query_one(
+        """
+        SELECT COUNT(*)
+        FROM findings
+        WHERE LOWER(severity) = 'critical'
+        """
+    )
+    high_count = query_one(
+        """
+        SELECT COUNT(*)
+        FROM findings
+        WHERE LOWER(severity) = 'high'
+        """
+    )
+    medium_count = query_one(
+        """
+        SELECT COUNT(*)
+        FROM findings
+        WHERE LOWER(severity) = 'medium'
+        """
+    )
 
     asset_chart = query_all(
         """
@@ -118,7 +139,10 @@ def index():
         stats=stats,
         asset_chart=asset_chart,
         finding_chart=finding_chart,
-        technology_chart=technology_chart
+        technology_chart=technology_chart,
+        critical_count=critical_count,
+        high_count=high_count,
+        medium_count=medium_count
     )
 
 @app.route("/assets")
