@@ -5,6 +5,7 @@ profiles:
       - subfinder
       - dnsx
       - httpx
+      - nuclei
 
   full:
     modules:
@@ -14,3 +15,4 @@ profiles:
       - gau
       - waybackurls
       - gowitness
+      - nuclei

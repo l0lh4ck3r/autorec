@@ -23,6 +23,10 @@ from modules.gowitness_module import (
     GowitnessModule
 )
 
+from modules.nuclei_module import (
+    NucleiModule
+)
+
 
 MODULE_MAP = {
 
@@ -36,7 +40,9 @@ MODULE_MAP = {
 
     "waybackurls": WaybackUrlsModule,
 
-    "gowitness": GowitnessModule
+    "gowitness": GowitnessModule,
+
+    "nuclei": NucleiModule
 }
 
 
