@@ -296,91 +296,67 @@
 
     </div>
 
-    <script>
+<script>
 
-    const assetLabels = [
-    {% for row in asset_chart %}
-    "{{ row.asset_type }}",
-    {% endfor %}
-    ];
+const assetLabels =
+{{ asset_chart | map(attribute='asset_type') | list | tojson }};
 
-    const assetData = [
-    {% for row in asset_chart %}
-    {{ row.count }},
-    {% endfor %}
-    ];
+const assetData =
+{{ asset_chart | map(attribute='count') | list | tojson }};
 
-    new Chart(
-        document.getElementById(
-            "assetChart"
-        ),
-        {
-            type: "pie",
-            data: {
-                labels: assetLabels,
-                datasets: [{
-                    data: assetData
-                }]
-            }
+new Chart(
+    document.getElementById("assetChart"),
+    {
+        type: "pie",
+        data: {
+            labels: assetLabels,
+            datasets: [{
+                data: assetData
+            }]
         }
-    );
+    }
+);
 
-    const findingLabels = [
-    {% for row in finding_chart %}
-    "{{ row.severity }}",
-    {% endfor %}
-    ];
+const findingLabels =
+{{ finding_chart | map(attribute='severity') | list | tojson }};
 
-    const findingData = [
-    {% for row in finding_chart %}
-    {{ row.count }},
-    {% endfor %}
-    ];
+const findingData =
+{{ finding_chart | map(attribute='count') | list | tojson }};
 
-    new Chart(
-        document.getElementById(
-            "findingChart"
-        ),
-        {
-            type: "doughnut",
-            data: {
-                labels: findingLabels,
-                datasets: [{
-                    data: findingData
-                }]
-            }
+new Chart(
+    document.getElementById("findingChart"),
+    {
+        type: "doughnut",
+        data: {
+            labels: findingLabels,
+            datasets: [{
+                data: findingData
+            }]
         }
-    );
+    }
+);
 
-    const technologyLabels = [
-    {% for row in technology_chart %}
-    "{{ row.technology }}",
-    {% endfor %}
-    ];
+const technologyLabels =
+{{ technology_chart | map(attribute='technology') | list | tojson }};
 
-    const technologyData = [
-    {% for row in technology_chart %}
-    {{ row.count }},
-    {% endfor %}
-    ];
+const technologyData =
+{{ technology_chart | map(attribute='count') | list | tojson }};
 
-    new Chart(
-        document.getElementById(
-            "technologyChart"
-        ),
-        {
-            type: "bar",
-            data: {
-                labels: technologyLabels,
-                datasets: [{
-                    label: "Technology Count",
-                    data: technologyData
-                }]
-            }
+new Chart(
+    document.getElementById("technologyChart"),
+    {
+        type: "bar",
+        data: {
+            labels: technologyLabels,
+            datasets: [{
+                label: "Technology Count",
+                data: technologyData
+            }]
         }
-    );
+    }
+);
 
-    </script>
+</script>
 
 </body>
 
