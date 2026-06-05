@@ -25,3 +25,21 @@ screenshots/
 # SecLists cache
 
 wordlists/SecLists/**/**pycache**/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Database
+latest.db
+
+# Scan outputs
+output/
+screenshots/
+logs/
+
+# Optional
+*.log
+.env
+.env.*
