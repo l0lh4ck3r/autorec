@@ -1,175 +1,259 @@
 # AutoRec
 
-AutoRec is a modular reconnaissance automation framework for attack surface discovery, bug bounty hunting, and continuous reconnaissance.
+Automated Reconnaissance and Vulnerability Assessment Framework
 
-It combines asset discovery, URL collection, technology fingerprinting, screenshotting, correlation, reporting, Docker deployment, and a dynamic web dashboard into a unified workflow.
+## Overview
+
+AutoRec is a modular reconnaissance and security assessment framework designed to automate bug bounty and penetration testing workflows. It combines subdomain enumeration, URL discovery, crawling, parameter extraction, vulnerability detection, technology fingerprinting, and risk scoring into a single pipeline.
+
+The framework integrates multiple industry-standard tools and produces structured outputs suitable for manual validation and reporting.
 
 ---
 
 ## Features
 
-### Recon Pipeline
+### Reconnaissance
 
-* Subfinder
-* DNSX
-* HTTPX
-* GAU
-* WaybackURLs
-* GoWitness
+* Subdomain enumeration
+* DNS resolution
+* Live host detection
+* Technology fingerprinting
 
-### Asset Inventory
+### Content Discovery
 
-Automatically discovers and stores:
+* URL collection from multiple sources
+* Historical URL gathering
+* Recursive crawling
+* JavaScript file discovery
 
-* Subdomains
-* Resolved Hosts
-* HTTP Services
-* URLs
-* Technologies
-* Screenshots
+### Attack Surface Mapping
 
-### Correlation Engine
+* Parameter extraction
+* Sensitive file detection
+* Endpoint classification
+* Dynamic URL identification
 
-Automatically scores and identifies interesting findings:
+### Vulnerability Detection
 
-* Admin Panels
-* Login Pages
-* APIs
-* Sensitive Paths
-* Interesting Technologies
-
-### Dashboard
-
-Available pages:
-
-* Dashboard Overview
-* Asset Inventory
-* URL Inventory
-* Technology Inventory
-* Findings Viewer
-* Screenshot Gallery
-* Scan History
+* Nuclei integration
+* Misconfiguration detection
+* Exposure checks
+* Template-based scanning
 
 ### Reporting
 
-* HTML Reports
-* Findings Summary
-* Asset Inventory Reports
+* Risk scoring engine
+* JSONL output
+* Dashboard summaries
+* Prioritized findings
 
-### Deployment
+---
 
-* Native Python
-* Docker
-* Docker Compose
+## Current Workflow
+
+```text
+Target
+   │
+   ▼
+Subdomain Enumeration
+   │
+   ▼
+Live Host Validation
+   │
+   ▼
+URL Collection
+   │
+   ▼
+Crawler
+   │
+   ▼
+Parameter Extraction
+   │
+   ▼
+Nuclei Scanning
+   │
+   ▼
+Risk Scoring
+   │
+   ▼
+Final Report
+```
+
+---
+
+## Project Structure
+
+```text
+autorec/
+│
+├── modules/
+│   ├── subfinder_module.py
+│   ├── httpx_module.py
+│   ├── crawler_module.py
+│   ├── nuclei_module.py
+│   ├── param_module.py
+│   └── ...
+│
+├── outputs/
+│   ├── subdomains.txt
+│   ├── live_hosts.txt
+│   ├── urls.txt
+│   ├── nuclei.jsonl
+│   └── reports/
+│
+├── config/
+│   ├── tools.yaml
+│   └── settings.yaml
+│
+├── docs/
+│
+├── tests/
+│
+├── main.py
+├── est_nuclei.py
+├── requirements.txt
+├── README.md
+└── LICENSE
+```
+
+---
+
+## Requirements
+
+### Operating System
+
+* Linux (Recommended)
+* Kali Linux
+* Parrot OS
+* Ubuntu
+
+### Python
+
+* Python 3.11+
+
+### External Tools
+
+Required tools:
+
+* subfinder
+* httpx
+* katana
+* waybackurls
+* gau
+* nuclei
+* dnsx
+* naabu (optional)
 
 ---
 
 ## Installation
 
-### Requirements
-
-* Python 3.12+
-* Go 1.22+
-* SQLite3
-* Docker (optional)
-
-### Clone Repository
+Clone repository:
 
 ```bash
-git clone https://github.com/l0lh4ck3r/autorec.git
-
+git clone https://github.com/<username>/autorec.git
 cd autorec
 ```
 
-### Create Virtual Environment
+Create virtual environment:
 
 ```bash
 python3 -m venv venv
-
 source venv/bin/activate
 ```
 
-### Install Dependencies
+Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Install Recon Tools
+Install ProjectDiscovery tools:
 
 ```bash
 go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 go install github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install github.com/lc/gau/v2/cmd/gau@latest
-go install github.com/tomnomnom/waybackurls@latest
+go install github.com/projectdiscovery/katana/cmd/katana@latest
+go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+```
+
+Update nuclei templates:
+
+```bash
+nuclei -update-templates
+```
+
+---
+
+## Configuration
+
+Example:
+
+```yaml
+target: example.com
+
+crawl_depth: 3
+
+enable_nuclei: true
+
+enable_js_analysis: true
+
+risk_threshold: medium
 ```
 
 ---
 
 ## Usage
 
-### Full Scan
+Run full workflow:
 
 ```bash
-python autorec.py scan example.com --profile full
+python main.py -d example.com
 ```
 
-### Launch Dashboard
+Run specific module:
 
 ```bash
-python dashboard/app.py
+python main.py --module nuclei
 ```
 
-Browse:
+Run crawler only:
 
-```text
-http://localhost:5000
-```
-
-Available routes:
-
-```text
-/
-/assets
-/urls
-/technologies
-/findings
-/screenshots
-/scans
+```bash
+python main.py --module crawler
 ```
 
 ---
 
-## Database
+## Output Files
 
-Primary tables:
-
-```text
-scans
-asset_inventory
-url_inventory
-technologies
-findings
-screenshots
-scan_state
-```
+| File           | Description               |
+| -------------- | ------------------------- |
+| subdomains.txt | Enumerated subdomains     |
+| live_hosts.txt | Active hosts              |
+| urls.txt       | Collected URLs            |
+| params.txt     | Parameters discovered     |
+| nuclei.jsonl   | Raw nuclei findings       |
+| report.json    | Final consolidated report |
 
 ---
 
-## Docker
+## Risk Scoring
 
-Build:
+AutoRec assigns findings into:
 
-```bash
-docker compose build
-```
+* Critical
+* High
+* Medium
+* Low
+* Informational
 
-Run:
+Scoring considers:
 
-```bash
-docker compose up
-```
+* Vulnerability severity
+* Endpoint sensitivity
+* Exposure type
+* Confidence level
 
 ---
 
@@ -177,42 +261,27 @@ docker compose up
 
 ### Completed
 
-* Recon Pipeline
-* SQLite Storage
-* Correlation Engine
-* HTML Reports
-* Docker Support
-* Dashboard Core
-* Asset Inventory
-* URL Inventory
-* Technology Inventory
-* Findings Viewer
-* Screenshot Gallery
-* Scan History
+* Subdomain enumeration
+* URL discovery
+* Crawler integration
+* Nuclei integration
+* Risk dashboard
 
-### Next
+### Planned
 
-* Search
-* Pagination
-* Filtering
-* Nuclei Integration
-* JavaScript Analysis
-* Notifications
-* Live Dashboard
+* JavaScript secret extraction
+* Screenshot collection
+* Authentication surface mapping
+* AI-assisted prioritization
+* Burp Suite export
+* PDF reporting
 
 ---
 
 ## Disclaimer
 
-This project is intended for authorized security testing and defensive security assessments only.
+This tool is intended for authorized security testing, bug bounty programs, and educational purposes only.
 
-Always obtain permission before testing any target systems.
+Always obtain permission before scanning any target.
 
 ---
-
-## Author
-
-l0lh4ck3r
-
-GitHub:
-https://github.com/l0lh4ck3r
