@@ -8,6 +8,135 @@ It combines asset discovery, URL collection, technology fingerprinting, screensh
 
 ## Features
 
+## Current Capabilities
+
+AutoRec currently provides an end-to-end reconnaissance and vulnerability discovery workflow.
+
+### Reconnaissance
+
+* Subdomain Enumeration (Subfinder)
+* DNS Resolution (DNSX)
+* HTTP Enumeration (HTTPX)
+* Historical URL Collection (GAU)
+* Historical URL Collection (WaybackURLs)
+* Screenshot Collection (GoWitness)
+
+### Asset Inventory
+
+Automatically discovers and stores:
+
+* Subdomains
+* Resolved Hosts
+* HTTP Services
+* URLs
+* Technologies
+* Screenshots
+
+### Technology Fingerprinting
+
+Automatically detects:
+
+* Web Servers
+* CDNs
+* Frameworks
+* CMS Platforms
+* Cloud Services
+* Security Technologies
+
+### Vulnerability Discovery
+
+Nuclei integration provides:
+
+* Vulnerability Scanning
+* Severity Tracking
+* Risk Scoring
+* Findings Storage
+* Dashboard Visibility
+
+Supported severities:
+
+* Critical
+* High
+* Medium
+* Low
+* Info
+
+### JavaScript Analysis
+
+Current capabilities:
+
+* JavaScript URL Discovery
+* JavaScript Inventory
+* Endpoint Pattern Extraction
+
+### Correlation Engine
+
+Automatically identifies:
+
+* Login Pages
+* Administrative Interfaces
+* API Endpoints
+* Sensitive Paths
+* Interesting Technologies
+
+### Dashboard
+
+Available pages:
+
+* Dashboard Overview
+* Asset Inventory
+* URL Inventory
+* Technology Inventory
+* Findings Viewer
+* Screenshot Gallery
+* Scan History
+
+Dashboard features:
+
+* Search
+* Pagination
+* Filtering
+* Sorting
+* Charts
+* Risk Widgets
+* Severity Analytics
+
+### Reporting
+
+* HTML Reports
+* Findings Reports
+* Asset Reports
+
+### Deployment
+
+Supported deployment methods:
+
+* Native Python
+* Docker
+* Docker Compose
+
+### Current Status
+
+✅ Asset Discovery
+
+✅ Technology Fingerprinting
+
+✅ Historical URL Collection
+
+✅ Screenshot Collection
+
+✅ JavaScript Inventory
+
+✅ Vulnerability Discovery
+
+✅ Risk Scoring
+
+✅ Dashboard Analytics
+
+✅ Findings Management
+
+✅ Recon Workflow Automation
+
 ### Recon Pipeline
 
 * Subfinder
@@ -16,6 +145,8 @@ It combines asset discovery, URL collection, technology fingerprinting, screensh
 * GAU
 * WaybackURLs
 * GoWitness
+* Nuclei
+* JavaScript Analysis
 
 ### Asset Inventory
 
@@ -49,6 +180,12 @@ Available pages:
 * Findings Viewer
 * Screenshot Gallery
 * Scan History
+* Search
+* Pagination
+* Filtering
+* Sorting
+* Charts
+* Risk Widgets
 
 ### Reporting
 
@@ -112,8 +249,11 @@ go install github.com/tomnomnom/waybackurls@latest
 ### Full Scan
 
 ```bash
+python autorec.py scan example.com --profile quick
+
 python autorec.py scan example.com --profile full
 ```
+Nuclei findings are automatically imported into SQLite and displayed in the dashboard.
 
 ### Launch Dashboard
 

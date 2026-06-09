@@ -144,7 +144,7 @@ Status: ✅
 * Filtering
 * Sorting
 
-Status: 🚧 Next
+Status: ✅
 
 ### Phase 13.4
 
@@ -152,7 +152,7 @@ Status: 🚧 Next
 * Dashboard Widgets
 * Better Visualizations
 
-Status: Planned
+Status: ✅
 
 ---
 
@@ -163,7 +163,7 @@ Status: Planned
 * Dashboard Integration
 * Nuclei Results Page
 
-Status: Planned
+Status: ✅
 
 ---
 
@@ -174,14 +174,37 @@ Status: Planned
 * Secret Discovery
 * API Discovery
 
-Status: Planned
+Status: 🚧 In Progress
 
 ---
 
-# Phase 16 - Parameter Mining
+# Phase 16 - Web Platform
 
-* URL Parameter Extraction
-* Parameter Inventory
+## Phase 16.1
+
+* Scan Launcher
+* New Scan Page
+
+## Phase 16.2
+
+* Background Jobs
+* Live Scan Execution
+
+## Phase 16.3
+
+* Live Logs
+* Scan Progress
+
+## Phase 16.4
+
+* Scan History
+* Per-Scan Dashboard
+
+## Phase 16.5
+
+* Update Center
+* Tool Updates
+* Nuclei Template Updates
 
 Status: Planned
 
