@@ -83,8 +83,4 @@ class GauModule(ReconModule):
                 f"[GAU] Imported {imported} URLs"
             )
 
-            engine.analyze_url(
-                    url
-                )
-
         return result
