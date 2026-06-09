@@ -27,6 +27,10 @@ from modules.nuclei_module import (
     NucleiModule
 )
 
+from modules.js_analysis_module import (
+JavascriptAnalysisModule
+)
+
 
 MODULE_MAP = {
 
@@ -42,7 +46,9 @@ MODULE_MAP = {
 
     "gowitness": GowitnessModule,
 
-    "nuclei": NucleiModule
+    "nuclei": NucleiModule,
+
+    "javascript": JavascriptAnalysisModule
 }
 
 
