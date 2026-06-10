@@ -25,19 +25,32 @@ class JavascriptAnalysisModule(ReconModule):
 
         for file in [gau_file, wayback_file]:
 
+            print(f"[JS] Reading: {file}")
+
             if not file.exists():
+                print(f"[JS] Missing: {file}")
                 continue
 
-            for line in file.read_text(
+            lines = file.read_text(
                 errors="ignore"
-            ).splitlines():
+            ).splitlines()
+
+            print(
+                f"[JS] {file.name}: "
+                f"{len(lines)} lines"
+            )
+
+            for line in lines:
 
                 line = line.strip()
 
-                if (
-                    ".js" in line
-                    or ".mjs" in line
+                # Temporary/simple detection
+                if re.search(
+                    r"\.(js|mjs)(\?|$)",
+                    line,
+                    re.IGNORECASE
                 ):
+                    js_urls.add(line)
                     js_urls.add(line)
 
         output_dir = (
@@ -55,18 +68,26 @@ class JavascriptAnalysisModule(ReconModule):
             / "js_urls.txt"
         )
 
+        print(
+            f"[JS] Total URLs Found: "
+            f"{len(js_urls)}"
+        )
+
         js_url_file.write_text(
-            "\n".join(sorted(js_urls))
+            "\n".join(sorted(js_urls)) + "\n"
         )
 
         print(
             f"[JS] Found {len(js_urls)} JavaScript files"
         )
+
         if js_urls:
 
             print(
                 f"[JS] Saved -> {js_url_file}"
             )
+
+            print("[JS] Sample URLs:")
 
             for url in sorted(js_urls)[:10]:
 
