@@ -1,5 +1,6 @@
 import json
 import re
+import requests
 
 from core.module import ReconModule
 
@@ -57,9 +58,17 @@ class JavascriptAnalysisModule(ReconModule):
             context.workspace
             / "js"
         )
-
         output_dir.mkdir(
             parents=True,
+            exist_ok=True
+        )
+
+        files_dir = (
+            output_dir
+            / "files"
+        )
+
+        files_dir.mkdir(
             exist_ok=True
         )
 
@@ -92,8 +101,68 @@ class JavascriptAnalysisModule(ReconModule):
             for url in sorted(js_urls)[:10]:
 
                 print(
-                    f"[JS URL] {url}"
+                f"[JS URL] {url}"
                 )
+            print(
+                "[JS] Starting downloads..."
+            )
+
+            downloaded = 0
+
+            for index, url in enumerate(
+                sorted(js_urls)[:3]
+            ):
+
+                try:
+
+                    print(
+                        f"[JS] Downloading: {url}"
+                    )
+
+                    response = requests.get(
+                        url,
+                        timeout=15,
+                        headers={
+                            "User-Agent":
+                            "AutoRec"
+                        }
+                    )
+
+                    if response.status_code != 200:
+
+                        print(
+                            f"[JS] Skipped "
+                            f"({response.status_code})"
+                        )
+
+                        continue
+
+                    file_path = (
+                        files_dir
+                        / f"file_{index}.js"
+                    )
+
+                    file_path.write_text(
+                        response.text
+                    )
+
+                    downloaded += 1
+
+                    print(
+                        f"[JS] Saved -> "
+                        f"{file_path.name}"
+                    )
+
+                except Exception as e:
+
+                    print(
+                        f"[JS ERROR] {e}"
+                    )
+
+            print(
+                f"[JS] Downloaded "
+                f"{downloaded} files"
+            )
 
         endpoints_file = (
             output_dir
