@@ -102,6 +102,86 @@ class JavascriptAnalysisModule(ReconModule):
 
             print(f"[JS] Files directory: {files_dir}")
 
+            print("[JS] Extracting endpoints...")
+
+            endpoint_regex = re.compile(
+                r'/(?:api|rest|graphql|admin|auth|login)[^"\']*', re.IGNORECASE
+            )
+
+            endpoints_file = output_dir / "endpoints.jsonl"
+
+            endpoint_count = 0
+
+            with open(endpoints_file, "w") as out:
+                for js_file in files_dir.glob("*.js"):
+                    try:
+                        content = js_file.read_text(errors="ignore")
+
+                        matches = set(endpoint_regex.findall(content))
+
+                        for endpoint in matches:
+                            finding = {"file": js_file.name, "endpoint": endpoint}
+
+                            out.write(json.dumps(finding) + "\n")
+
+                            endpoint_count += 1
+
+                    except Exception as e:
+                        print(f"[JS ERROR] {e}")
+
+            print(f"[JS] Found {endpoint_count} endpoints")
+
+            print(f"[JS] Saved -> {endpoints_file}")
+
+            for js_file in files_dir.glob("*.js"):
+                try:
+                    content = js_file.read_text(errors="ignore")
+
+                    print(f"[JS] {js_file.name}: {len(content)} bytes")
+
+                except Exception as e:
+                    print(f"[JS ERROR] {e}")
+                print("[JS] Detecting secrets...")
+
+        secrets_file = output_dir / "secrets.jsonl"
+
+        secret_patterns = {
+            "api_key": r"api[_-]?key",
+            "token": r"token",
+            "secret": r"secret",
+            "password": r"password",
+            "bearer": r"bearer",
+            "jwt": r"eyJ[A-Za-z0-9_-]+",
+        }
+
+        secret_count = 0
+
+        with open(secrets_file, "w") as out:
+            for js_file in files_dir.glob("*.js"):
+                try:
+                    content = js_file.read_text(errors="ignore")
+
+                    for name, pattern in secret_patterns.items():
+                        matches = re.findall(pattern, content, re.IGNORECASE)
+
+                        if matches:
+                            finding = {
+                                "file": js_file.name,
+                                "type": name,
+                                "count": len(matches),
+                            }
+
+                            out.write(json.dumps(finding) + "\n")
+
+                            secret_count += 1
+
+                except Exception as e:
+                    print(f"[JS ERROR] {e}")
+
+        print(f"[JS] Found {secret_count} secret indicators")
+
+        print(f"[JS] Saved -> {secrets_file}")
+
         endpoints_file = output_dir / "endpoints.jsonl"
 
         endpoint_regex = re.compile(r'/(?:api|admin|v1|v2)[^"\']*')
