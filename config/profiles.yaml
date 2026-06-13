@@ -19,4 +19,5 @@ profiles:
       - interesting_mapper
       - gowitness
       - screenshot_intelligence
+      - prioritization
       - nuclei

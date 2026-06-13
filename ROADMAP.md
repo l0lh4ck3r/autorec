@@ -2,7 +2,7 @@
 
 ## Current Version
 
-v0.4.0
+v0.9.1
 
 ---
 
@@ -29,32 +29,17 @@ Status: ✅
 
 ---
 
-## Phase 3 - Subdomain Discovery
+## Phase 3 - Asset Discovery
 
 * Subfinder Integration
-
-Status: ✅
-
----
-
-## Phase 4 - DNS Resolution
-
 * DNSX Integration
-
-Status: ✅
-
----
-
-## Phase 5 - HTTP Enumeration
-
 * HTTPX Integration
-* Technology Detection
 
 Status: ✅
 
 ---
 
-## Phase 6 - URL Collection
+## Phase 4 - URL Collection
 
 * GAU Integration
 * WaybackURLs Integration
@@ -64,7 +49,7 @@ Status: ✅
 
 ---
 
-## Phase 7 - Screenshot Collection
+## Phase 5 - Screenshot Collection
 
 * GoWitness Integration
 * Screenshot Storage
@@ -73,144 +58,102 @@ Status: ✅
 
 ---
 
-## Phase 8 - Reporting
+## Phase 6 - Vulnerability Discovery
+
+* Nuclei Integration
+* Severity Tracking
+* Findings Storage
+
+Status: ✅
+
+---
+
+## Phase 7 - JavaScript Analysis
+
+* JavaScript URL Discovery
+* JavaScript Downloader
+* Endpoint Extraction
+* Secret Detection
+* API Discovery
+
+Status: ✅
+
+---
+
+## Phase 8 - Recon Intelligence
+
+### Phase 8.1 - Authentication Mapping
+
+* Login Detection
+* Authentication Endpoint Discovery
+* Account Portal Discovery
+
+Status: ✅
+
+### Phase 8.2 - Interesting Endpoint Mapping
+
+* Admin Panel Detection
+* GraphQL Detection
+* Swagger Detection
+* API Documentation Detection
+* Infrastructure Portal Detection
+
+Status: ✅
+
+### Phase 8.3 - Screenshot Intelligence
+
+* cPanel Detection
+* Webmail Detection
+* Mail Portal Detection
+* Dashboard Detection
+* Infrastructure Portal Classification
+
+Status: ✅
+
+---
+
+## Phase 9 - Reporting
 
 * HTML Reports
+* Asset Reporting
+* Findings Reporting
 
 Status: ✅
 
 ---
 
-## Phase 9 - Correlation Engine
+# Next Releases
 
-* Asset Scoring
-* Findings Generation
+## v1.0.0
 
-Status: ✅
+### Reporting & Prioritization
 
----
-
-## Phase 10 - Scan Persistence
-
-* Scan State Tracking
-* Resume Support
-
-Status: ✅
-
----
-
-## Phase 11 - Docker Support
-
-* Dockerfile
-* Docker Compose
-* Containerized Deployment
-
-Status: ✅
-
----
-
-## Phase 12 - Dashboard Core
-
-* Dashboard Homepage
-* Statistics Overview
-* Navigation
-
-Status: ✅
-
----
-
-## Phase 13 - Dashboard Expansion
-
-### Phase 13.1
-
-* Asset Inventory
-* Findings Viewer
-* Screenshot Gallery
-
-Status: ✅
-
-### Phase 13.2
-
-* URL Inventory
-* Technology Inventory
-* Scan History
-
-Status: ✅
-
-### Phase 13.3
-
-* Search
-* Pagination
-* Filtering
-* Sorting
-
-Status: ✅
-
-### Phase 13.4
-
-* Charts
-* Dashboard Widgets
-* Better Visualizations
-
-Status: ✅
-
----
-
-# Phase 14 - Nuclei Integration
-
-* Vulnerability Scanning
-* Severity Tracking
-* Dashboard Integration
-* Nuclei Results Page
-
-Status: ✅
-
----
-
-# Phase 15 - JavaScript Analysis
-
-* JS Inventory
-* Endpoint Discovery
-* Secret Discovery
-* API Discovery
+* Finding Prioritization Engine
+* Risk Scoring Improvements
+* Executive Summary Section
+* High-Value Asset Identification
+* Attack Surface Ranking
 
 Status: 🚧 In Progress
 
 ---
 
-# Phase 16 - Web Platform
+## v1.1.0
 
-## Phase 16.1
+### Dashboard Improvements
 
-* Scan Launcher
-* New Scan Page
-
-## Phase 16.2
-
-* Background Jobs
-* Live Scan Execution
-
-## Phase 16.3
-
-* Live Logs
-* Scan Progress
-
-## Phase 16.4
-
-* Scan History
-* Per-Scan Dashboard
-
-## Phase 16.5
-
-* Update Center
-* Tool Updates
-* Nuclei Template Updates
+* Enhanced Statistics
+* Finding Trends
+* Severity Analytics
+* Better Visualizations
 
 Status: Planned
 
 ---
 
-# Phase 17 - Continuous Recon
+## v1.2.0
+
+### Continuous Recon
 
 * Asset Diffing
 * URL Diffing
@@ -221,30 +164,39 @@ Status: Planned
 
 ---
 
-# Phase 18 - Notifications
+## v1.3.0
 
-* Discord
-* Slack
-* Telegram
+### Notifications
+
+* Discord Integration
+* Slack Integration
+* Telegram Integration
 
 Status: Planned
 
 ---
 
-# Phase 19 - API Layer
+## v1.4.0
+
+### API Layer
 
 * REST API
 * JSON Export
+* External Integrations
 
 Status: Planned
 
 ---
 
-# Phase 20 - Real-Time Dashboard
+## v2.0.0
 
-* Live Progress
-* WebSockets
-* Real-Time Logs
+### Advanced Intelligence
+
+* Technology Intelligence
+* Asset Classification
+* Correlation Engine 2.0
+* Attack Surface Prioritization
+* AI-Assisted Recon Analysis
 
 Status: Planned
 
@@ -252,13 +204,15 @@ Status: Planned
 
 # Long-Term Vision
 
-AutoRec aims to become a lightweight attack surface management and continuous reconnaissance platform capable of:
+AutoRec aims to become a lightweight Attack Surface Management (ASM) and Continuous Reconnaissance platform capable of:
 
 * Asset Discovery
 * Vulnerability Discovery
+* Attack Surface Mapping
 * Change Detection
 * Reporting
 * Monitoring
-* Automation
+* Recon Intelligence
+* Workflow Automation
 
-while remaining simple to deploy, modular, and easy to extend.
+while remaining modular, lightweight, and easy to extend.
