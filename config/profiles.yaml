@@ -15,5 +15,8 @@ profiles:
       - gau
       - waybackurls
       - javascript
+      - auth_mapper
+      - interesting_mapper
       - gowitness
+      - screenshot_intelligence
       - nuclei
