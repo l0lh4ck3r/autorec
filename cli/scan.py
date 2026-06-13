@@ -23,6 +23,8 @@ from modules.interesting_mapper import InterestingMapperModule
 
 from modules.screenshot_intelligence import ScreenshotIntelligenceModule
 
+from modules.prioritization import PrioritizationModule
+
 
 MODULE_MAP = {
     "subfinder": SubfinderModule,
@@ -36,6 +38,7 @@ MODULE_MAP = {
     "auth_mapper": AuthMapperModule,
     "interesting_mapper": InterestingMapperModule,
     "screenshot_intelligence": ScreenshotIntelligenceModule,
+    "prioritization": PrioritizationModule,
 }
 
 

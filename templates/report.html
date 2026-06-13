@@ -4,206 +4,382 @@
 
 <head>
 
-<title>AutoRec Dashboard</title>
+    <title>AutoRec Dashboard</title>
 
-<style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #fafafa;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
+        h1,
+        h2 {
+            color: #333;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+        }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
 
-th {
-    background: #f5f5f5;
-}
+        th {
+            background: #f5f5f5;
+        }
 
-img {
-    max-width: 600px;
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
+        img {
+            max-width: 600px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
 
-.section {
-    margin-bottom: 40px;
-}
+        .section {
+            margin-bottom: 40px;
+        }
 
-.card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
-}
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
 
-.summary-grid {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
+        .summary-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-.summary-card {
-    border: 1px solid #ddd;
-    padding: 15px;
-    min-width: 180px;
-}
+        .summary-card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            min-width: 180px;
+        }
 
-</style>
+        .low {
+            color: #e67e22;
+        }
+
+        .medium {
+            color: #d35400;
+            font-weight: bold;
+        }
+
+        .high {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .critical {
+            color: #8e0000;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<h1>AutoRec Dashboard</h1>
+    <h1>AutoRec Dashboard</h1>
 
-<h2>{{ target }}</h2>
+    <h2>{{ target }}</h2>
 
-<div class="section">
+    <div class="section">
 
-<h2>Summary</h2>
+        <h2>Executive Summary</h2>
 
-<div class="summary-grid">
+        <div class="card">
 
-<div class="summary-card">
-<strong>Assets</strong><br>
-{{ stats.assets }}
-</div>
+            <p>
+                <strong>Target:</strong>
+                {{ target }}
+            </p>
 
-<div class="summary-card">
-<strong>Technologies</strong><br>
-{{ stats.technologies }}
-</div>
+            <p>
+                AutoRec completed reconnaissance,
+                asset discovery, JavaScript analysis,
+                intelligence gathering and vulnerability
+                assessment for this target.
+            </p>
 
-<div class="summary-card">
-<strong>Findings</strong><br>
-{{ stats.findings }}
-</div>
+            <p>
+                Review Priority Findings first,
+                then Findings, Recon Intelligence,
+                and Screenshots.
+            </p>
 
-<div class="summary-card">
-<strong>Screenshots</strong><br>
-{{ stats.screenshots }}
-</div>
+        </div>
 
-</div>
+    </div>
 
-</div>
+    <div class="section">
 
-<div class="section">
+        <h2>Summary</h2>
 
-<h2>Findings</h2>
+        <div class="summary-grid">
 
-<table>
+            <div class="summary-card">
+                <strong>Assets</strong><br>
+                {{ stats.assets }}
+            </div>
 
-<tr>
-<th>Severity</th>
-<th>Score</th>
-<th>Title</th>
-<th>Evidence</th>
-</tr>
+            <div class="summary-card">
+                <strong>Technologies</strong><br>
+                {{ stats.technologies }}
+            </div>
 
-{% for finding in findings %}
+            <div class="summary-card">
+                <strong>Findings</strong><br>
+                {{ stats.findings }}
+            </div>
 
-<tr>
-<td>{{ finding.severity }}</td>
-<td>{{ finding.score }}</td>
-<td>{{ finding.title }}</td>
-<td>{{ finding.evidence }}</td>
-</tr>
+            <div class="summary-card">
+                <strong>Screenshots</strong><br>
+                {{ stats.screenshots }}
+            </div>
 
-{% endfor %}
+        </div>
 
-</table>
+    </div>
 
-</div>
+    <div class="section">
 
-<div class="section">
+        <h2>Priority Findings</h2>
 
-<h2>Technologies</h2>
+        <table>
 
-<table>
+            <tr>
+                <th>Severity</th>
+                <th>Score</th>
+                <th>Title</th>
+            </tr>
 
-<tr>
-<th>Host</th>
-<th>Technology</th>
-</tr>
+            {% for finding in findings %}
 
-{% for tech in technologies %}
+            {% if finding.score >= 50 %}
 
-<tr>
-<td>{{ tech.host }}</td>
-<td>{{ tech.technology }}</td>
-</tr>
+            <tr>
 
-{% endfor %}
+                <td class="{{ finding.severity|lower }}">
+                    {{ finding.severity }}
+                </td>
 
-</table>
+                <td>
+                    {{ finding.score }}
+                </td>
 
-</div>
+                <td>
+                    {{ finding.title }}
+                </td>
 
-<div class="section">
+            </tr>
 
-<h2>Assets</h2>
+            {% endif %}
 
-<table>
+            {% endfor %}
 
-<tr>
-<th>Type</th>
-<th>Value</th>
-</tr>
+        </table>
 
-{% for asset in assets %}
+    </div>
 
-<tr>
-<td>{{ asset.asset_type }}</td>
-<td>{{ asset.asset_value }}</td>
-</tr>
+    <div class="section">
 
-{% endfor %}
+        <h2>Findings</h2>
 
-</table>
+        <table>
 
-</div>
+            <tr>
+                <th>Severity</th>
+                <th>Score</th>
+                <th>Title</th>
+                <th>Evidence</th>
+            </tr>
 
-<div class="section">
+            {% for finding in findings %}
 
-<h2>Screenshots</h2>
+            <tr>
 
-{% if screenshots %}
+                <td class="{{ finding.severity|lower }}">
+                    {{ finding.severity }}
+                </td>
 
-{% for screenshot in screenshots %}
+                <td>
+                    {{ finding.score }}
+                </td>
 
-<div class="card">
+                <td>
+                    {{ finding.title }}
+                </td>
 
-<p>
-<strong>Host:</strong>
-{{ screenshot.host }}
-</p>
+                <td>
+                    {{ finding.evidence }}
+                </td>
 
-<a href="{{ screenshot.image_path }}">
-<img src="{{ screenshot.image_path }}">
-</a>
+            </tr>
 
-</div>
+            {% endfor %}
 
-{% endfor %}
+        </table>
 
-{% else %}
+    </div>
 
-<p>No screenshots collected.</p>
+    <div class="section">
 
-{% endif %}
+        <h2>Technologies</h2>
 
-</div>
+        <table>
+
+            <tr>
+                <th>Host</th>
+                <th>Technology</th>
+            </tr>
+
+            {% for tech in technologies %}
+
+            <tr>
+
+                <td>
+                    {{ tech.host }}
+                </td>
+
+                <td>
+                    {{ tech.technology }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Assets</h2>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Value</th>
+            </tr>
+
+            {% for asset in assets %}
+
+            <tr>
+
+                <td>
+                    {{ asset.asset_type }}
+                </td>
+
+                <td>
+                    {{ asset.asset_value }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Recon Intelligence</h2>
+
+        <div class="card">
+
+            <ul>
+
+                <li>
+                    Authentication Mapping
+                </li>
+
+                <li>
+                    Interesting Endpoint Detection
+                </li>
+
+                <li>
+                    JavaScript Analysis
+                </li>
+
+                <li>
+                    Secret Detection
+                </li>
+
+                <li>
+                    Screenshot Intelligence
+                </li>
+
+                <li>
+                    Attack Surface Mapping
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Screenshots</h2>
+
+        {% if screenshots %}
+
+        {% for screenshot in screenshots %}
+
+        <div class="card">
+
+            <p>
+                <strong>Host:</strong>
+                {{ screenshot.host }}
+            </p>
+
+            <a href="{{ screenshot.image_path }}">
+                <img src="{{ screenshot.image_path }}">
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <p>No screenshots collected.</p>
+
+        {% endif %}
+
+    </div>
+
+    <hr>
+
+    <div class="footer">
+
+        <p>
+            Generated by AutoRec v1.0.0
+        </p>
+
+    </div>
 
 </body>
 

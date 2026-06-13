@@ -24,39 +24,21 @@ app = typer.Typer()
 
 
 @app.command()
-def scan(
-    target: str,
-    profile: str = "quick"
-):
-    asyncio.run(
-        run_scan(
-            target,
-            profile
-        )
-    )
+def scan(target: str, profile: str = "quick"):
+    asyncio.run(run_scan(target, profile))
 
 
-async def run_scan(
-    target,
-    profile
-):
+async def run_scan(target, profile):
 
     workspace = Workspace()
 
-    scan_dir = workspace.create(
-        target
-    )
+    scan_dir = workspace.create(target)
 
-    db = initialize_database(
-        scan_dir / "scan.db"
-    )
+    db = initialize_database(scan_dir / "scan.db")
 
     repo = Repository(db)
 
-    scan_id = repo.create_scan(
-        target,
-        profile
-    )
+    scan_id = repo.create_scan(target, profile)
 
     context = ScanContext(
         target=target,
@@ -64,72 +46,39 @@ async def run_scan(
         workspace=scan_dir,
         repository=repo,
         eventbus=EventBus(),
-        scan_id=scan_id
+        scan_id=scan_id,
     )
 
-    modules = load_modules(
-        profile
-    )
+    modules = load_modules(profile)
 
-    engine = Engine(
-        modules
-    )
+    engine = Engine(modules)
 
-    await engine.run(
-        context
-    )
+    await engine.run(context)
 
-    repo.complete_scan(
-        scan_id
-    )
+    repo.complete_scan(scan_id)
 
     reporter = HTMLReport()
 
-    reporter.generate(
-        scan_dir,
-        target,
-        repo.get_findings(),
-        repo.get_screenshots()
-    )
+    reporter.generate(scan_dir, target, repo.get_findings(), repo.get_screenshots())
 
-    shutil.copy(
-        scan_dir / "scan.db",
-        "latest.db"
-    )
+    shutil.copy(scan_dir / "scan.db", "latest.db")
 
-    print(
-        f"[+] Scan completed: {scan_id}"
-    )
+    print(f"[+] Scan completed: {scan_id}")
 
-    print(
-        f"[+] Workspace: {scan_dir}"
-    )
+    print(f"[+] Workspace: {scan_dir}")
 
-async def watch_target(
-    target,
-    profile
-):
 
-    print(
-        f"[*] Watching {target}"
-    )
+async def watch_target(target, profile):
 
-    await run_scan(
-        target,
-        profile
-    )
+    print(f"[*] Watching {target}")
 
-    db = Database(
-        "latest.db"
-    )
+    await run_scan(target, profile)
 
-    repo = Repository(
-        db
-    )
+    db = Database("latest.db")
 
-    engine = DiffEngine(
-        repo
-    )
+    repo = Repository(db)
+
+    engine = DiffEngine(repo)
 
     print()
 
@@ -140,16 +89,11 @@ async def watch_target(
     assets = engine.new_assets()
 
     if assets:
-
         for asset in assets:
-
             print(asset)
 
     else:
-
-        print(
-            "No differences found"
-        )
+        print("No differences found")
 
     print()
 
@@ -160,16 +104,11 @@ async def watch_target(
     urls = engine.new_urls()
 
     if urls:
-
         for url in urls:
-
             print(url)
 
     else:
-
-        print(
-            "No new URLs"
-        )
+        print("No new URLs")
 
     print()
 
@@ -177,21 +116,14 @@ async def watch_target(
     print("NEW TECHNOLOGIES")
     print("=" * 50)
 
-    technologies = (
-        engine.new_technologies()
-    )
+    technologies = engine.new_technologies()
 
     if technologies:
-
         for tech in technologies:
-
             print(tech)
 
     else:
-
-        print(
-            "No new technologies"
-        )
+        print("No new technologies")
 
 
 @app.command()
@@ -201,25 +133,15 @@ def doctor_cmd():
 
 
 @app.command()
-def search(
-    keyword: str
-):
+def search(keyword: str):
 
-    db = Database(
-        "latest.db"
-    )
+    db = Database("latest.db")
 
-    repo = Repository(
-        db
-    )
+    repo = Repository(db)
 
-    engine = SearchEngine(
-        repo
-    )
+    engine = SearchEngine(repo)
 
-    results = engine.search(
-        keyword
-    )
+    results = engine.search(keyword)
 
     print()
 
@@ -228,11 +150,7 @@ def search(
     print("=" * 50)
 
     for row in results.get("assets", []):
-
-        print(
-            f"{row['asset_type']}: "
-            f"{row['asset_value']}"
-        )
+        print(f"{row['asset_type']}: {row['asset_value']}")
 
     print()
 
@@ -241,11 +159,7 @@ def search(
     print("=" * 50)
 
     for row in results.get("findings", []):
-
-        print(
-            f"[{row['severity']}] "
-            f"{row['evidence']}"
-        )
+        print(f"[{row['severity']}] {row['evidence']}")
 
     print()
 
@@ -254,11 +168,7 @@ def search(
     print("=" * 50)
 
     for row in results.get("urls", []):
-
-        print(
-            f"{row['source']} "
-            f"{row['url']}"
-        )
+        print(f"{row['source']} {row['url']}")
 
     print()
 
@@ -267,28 +177,17 @@ def search(
     print("=" * 50)
 
     for row in results.get("technologies", []):
-
-        print(
-            f"{row['technology']} "
-            f"-> "
-            f"{row['host']}"
-        )
+        print(f"{row['technology']} -> {row['host']}")
 
 
 @app.command()
 def diff():
 
-    db = Database(
-        "latest.db"
-    )
+    db = Database("latest.db")
 
-    repo = Repository(
-        db
-    )
+    repo = Repository(db)
 
-    engine = DiffEngine(
-        repo
-    )
+    engine = DiffEngine(repo)
 
     print()
 
@@ -299,13 +198,10 @@ def diff():
     assets = engine.new_assets()
 
     if not assets:
-
         print("No differences found")
 
     else:
-
         for asset in assets:
-
             print(asset)
 
     print()
@@ -317,13 +213,10 @@ def diff():
     urls = engine.new_urls()
 
     if not urls:
-
         print("No new URLs")
 
     else:
-
         for url in urls:
-
             print(url)
 
     print()
@@ -335,47 +228,56 @@ def diff():
     technologies = engine.new_technologies()
 
     if not technologies:
-
         print("No new technologies")
 
     else:
-
         for tech in technologies:
-
             print(tech)
+
+
 @app.command()
 def rebuild_report():
 
-    db = Database(
-        "latest.db"
-    )
+    db = Database("latest.db")
 
-    repo = Repository(
-        db
-    )
+    repo = Repository(db)
 
     reporter = HTMLReport()
+
+    findings = repo.get_findings()
+
+    screenshots = repo.get_screenshots()
+
+    assets = repo.get_assets()
+
+    technologies = repo.get_technologies()
+
+    stats = {
+        "assets": len(assets),
+        "technologies": len(technologies),
+        "findings": len(findings),
+        "screenshots": len(screenshots),
+    }
 
     reporter.generate(
         ".",
         repo.get_latest_target(),
-        repo.get_findings(),
-        repo.get_screenshots()
+        findings,
+        screenshots,
+        assets,
+        technologies,
+        stats,
     )
 
-    print(
-        "[+] Report rebuilt"
-    )
+    print("[+] Report rebuilt")
+
+
 @app.command()
 def stats():
 
-    db = Database(
-        "latest.db"
-    )
+    db = Database("latest.db")
 
-    repo = Repository(
-        db
-    )
+    repo = Repository(db)
 
     print()
 
@@ -383,44 +285,25 @@ def stats():
     print("AUTOREC STATS")
     print("=" * 50)
 
-    print(
-        f"Assets: "
-        f"{repo.count_assets()}"
-    )
+    print(f"Assets: {repo.count_assets()}")
 
-    print(
-        f"URLs: "
-        f"{repo.count_urls()}"
-    )
+    print(f"URLs: {repo.count_urls()}")
 
-    print(
-        f"Technologies: "
-        f"{repo.count_technologies()}"
-    )
+    print(f"Technologies: {repo.count_technologies()}")
 
-    print(
-        f"Screenshots: "
-        f"{repo.count_screenshots()}"
-    )
+    print(f"Screenshots: {repo.count_screenshots()}")
 
-    print(
-        f"Findings: "
-        f"{repo.count_findings()}"
-    )
+    print(f"Findings: {repo.count_findings()}")
+
+
 @app.command()
 def screenshots():
 
-    db = Database(
-        "latest.db"
-    )
+    db = Database("latest.db")
 
-    repo = Repository(
-        db
-    )
+    repo = Repository(db)
 
-    screenshots = (
-        repo.get_screenshots()
-    )
+    screenshots = repo.get_screenshots()
 
     print()
 
@@ -429,73 +312,60 @@ def screenshots():
     print("=" * 50)
 
     if not screenshots:
-
-        print(
-            "No screenshots found"
-        )
+        print("No screenshots found")
 
         return
 
     for shot in screenshots:
-
         print()
 
-        print(
-            f"Host: "
-            f"{shot['host']}"
-        )
+        print(f"Host: {shot['host']}")
 
-        print(
-            f"Path: "
-            f"{shot['image_path']}"
-        )
+        print(f"Path: {shot['image_path']}")
+
 
 @app.command()
-def watch(
-    target: str,
-    profile: str = "full"
-):
+def watch(target: str, profile: str = "full"):
 
-    asyncio.run(
-        watch_target(
-            target,
-            profile
-        )
-    )
+    asyncio.run(watch_target(target, profile))
+
+
 @app.command()
 def dashboard():
 
-    db = Database(
-        "latest.db"
-    )
+    db = Database("latest.db")
 
-    repo = Repository(
-        db
-    )
+    repo = Repository(db)
 
-    reporter = HTMLReport()
+    findings = repo.get_findings()
+
+    screenshots = repo.get_screenshots()
+
+    assets = repo.get_assets()
+
+    technologies = repo.get_technologies()
 
     stats = {
-        "assets": repo.count_assets(),
-        "technologies": repo.count_technologies(),
-        "findings": repo.count_findings(),
-        "screenshots": repo.count_screenshots()
+        "assets": len(assets),
+        "technologies": len(technologies),
+        "findings": len(findings),
+        "screenshots": len(screenshots),
     }
+
+    reporter = HTMLReport()
 
     reporter.generate(
         ".",
         repo.get_latest_target(),
-        repo.get_findings(),
-        repo.get_screenshots(),
-        repo.get_assets(),
-        repo.get_technologies(),
-        stats
+        findings,
+        screenshots,
+        assets,
+        technologies,
+        stats,
     )
 
-    print(
-        "[+] Dashboard generated: report.html"
-    )
+    print("[+] Dashboard generated: report.html")
+
 
 if __name__ == "__main__":
-
     app()
