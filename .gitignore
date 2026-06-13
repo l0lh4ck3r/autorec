@@ -93,3 +93,7 @@ test.txt
 
 # Temporary testing scripts
 test_*.py
+
+# Local machine files
+doctor.json
+*.local.json
