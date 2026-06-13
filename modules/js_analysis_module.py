@@ -1,8 +1,11 @@
 import json
 import re
 import requests
+import urllib3
 
 from core.module import ReconModule
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class JavascriptAnalysisModule(ReconModule):
@@ -34,14 +37,15 @@ class JavascriptAnalysisModule(ReconModule):
 
             print(f"[JS] {file.name}: {len(lines)} lines")
 
+            # Process only first 5000 lines while testing
             for line in lines[:5000]:
                 line = line.strip()
 
-                # Temporary/simple detection
                 if re.search(r"\.(js|mjs)(\?|$)", line, re.IGNORECASE):
                     js_urls.add(line)
 
         output_dir = context.workspace / "js"
+
         output_dir.mkdir(parents=True, exist_ok=True)
 
         files_dir = output_dir / "files"
@@ -63,17 +67,20 @@ class JavascriptAnalysisModule(ReconModule):
 
             for url in sorted(js_urls)[:10]:
                 print(f"[JS URL] {url}")
+
             print("[JS] Starting downloads...")
 
             downloaded = 0
 
-            for index, url in enumerate(sorted(js_urls)[:3]):
+            for index, url in enumerate(list(js_urls)[:3]):
                 try:
                     print(f"[JS] Downloading: {url}")
 
                     response = requests.get(
-                        url, timeout=15, headers={"User-Agent": "AutoRec"}
+                        url, timeout=15, verify=False, headers={"User-Agent": "AutoRec"}
                     )
+
+                    print(f"[JS] Status: {response.status_code}")
 
                     if response.status_code != 200:
                         print(f"[JS] Skipped ({response.status_code})")
@@ -92,6 +99,7 @@ class JavascriptAnalysisModule(ReconModule):
                     print(f"[JS ERROR] {e}")
 
             print(f"[JS] Downloaded {downloaded} files")
+
             print(f"[JS] Files directory: {files_dir}")
 
         endpoints_file = output_dir / "endpoints.jsonl"
